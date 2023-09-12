@@ -128,7 +128,7 @@ interface TransactionPayload {
 }
 ```
 
-## 6. Pagination System
+## Pagination System
 
 Narvi's API incorporates a robust pagination system that is designed to efficiently handle large datasets. This system utilizes cursor-based pagination, allowing you to navigate through lists of resources with ease. To work with the pagination system, you'll primarily interact with the `ApiSearchResult` interface, which is used for paginated responses, and the `RangeQueryParam` interface, which is used for filtering resources within a specific range.
 
