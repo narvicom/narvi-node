@@ -18,9 +18,7 @@ declare module 'narvi' {
 
     namespace AccountsUpdateParams {}
 
-    interface AccountsListParams extends PaginationParams {
-      created?: Narvi.RangeQueryParam | number
-    }
+    interface AccountsListParams extends PaginationParams {}
 
     class AccountsResource {
       create(

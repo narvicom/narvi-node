@@ -226,31 +226,17 @@ declare module 'narvi' {
      * at any time.
      */
     export interface ApiSearchResult<T> {
-      object: 'search_result'
-
-      data: Array<T>
+      results: Array<T>
 
       /**
-       * True if this list has another page of items after this one that can be fetched.
+       * The absolute URL with cursor token to use to get the next page of results. If it's `null` it means there are no further results to a query.
        */
-      has_more: boolean
+      next: string | null
 
       /**
-       * The URL where this list can be accessed.
+       * The absolute URL with cursor token to use to get the previous page of results.
        */
-      url: string
-
-      /**
-       * The page token to use to get the next page of results. If `has_more` is
-       * true, this will be set to a concrete string value.
-       */
-      next_page: string | null
-
-      /**
-       * The total number of search results. Only present when `expand` request
-       * parameter contains `total_count`.
-       */
-      total_count?: number
+      previous: string | null
     }
 
     export interface ApiSearchResultPromise<T>

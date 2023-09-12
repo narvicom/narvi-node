@@ -128,6 +128,69 @@ interface TransactionPayload {
 }
 ```
 
+## 6. Pagination System
+
+Narvi's API incorporates a robust pagination system that is designed to efficiently handle large datasets. This system utilizes cursor-based pagination, allowing you to navigate through lists of resources with ease. To work with the pagination system, you'll primarily interact with the `ApiSearchResult` interface, which is used for paginated responses, and the `RangeQueryParam` interface, which is used for filtering resources within a specific range.
+
+### Pagination with `ApiSearchResult`
+
+The `ApiSearchResult` interface defines the structure of paginated responses in Narvi's API. Here are its key properties:
+
+- `results`: An array containing the current page of results. These are the resources you requested. Maximum of 20 items per one request.
+
+- `next`: The absolute URL with a cursor token to use when fetching the next page of results. If `next` is `null`, it indicates that there are no further results to retrieve.
+
+- `previous`: The absolute URL with a cursor token to use when fetching the previous page of results. If `previous` is `null`, it means you are on the first page of results.
+
+### Using Cursors to Retrieve Resources
+
+#### Retrieving the Next Page
+
+To retrieve the next page of results, you can use the `next` cursor token provided in the `ApiSearchResult`. Here's an example of how to use it:
+
+```typescript
+const nextPageUrl = response.next; // an absolute URL to fetch the next page
+const nextPageCursor = Narvi.getPaginationCursor(nextPageUrl); // Helper function to extract the cursor query param from the url
+const nextPageResponse = await narvi.someEndpoint.list({ cursor: nextPageCursor });
+```
+
+
+
+This code fetches the next page of results using the `next` cursor obtained from the previous response.
+
+#### Starting from a Specific Cursor
+
+If you want to start fetching resources from a specific cursor obtained from a previous `ApiSearchResult` query, you can directly pass that cursor to the `.list({ cursor: string })` endpoint. Here's how to do it:
+
+```typescript
+const specificCursor = // Your specific cursor obtained from a previous response;
+const specificCursorResponse = await narvi.someEndpoint.list({ cursor: specificCursor });
+```
+
+By using the cursor, you can pinpoint the exact position in the paginated dataset to begin fetching resources, providing fine-grained control over your data retrieval process.
+
+### Filtering Resources with `RangeQueryParam`
+
+Additionally, Narvi's API provides the `RangeQueryParam` interface, which you can use to filter resources based on specific criteria such as date range or amount range. These filters can be applied when making requests to certain endpoints that support filtering.
+
+Example usage for filtering based on date and amount range:
+
+```typescript
+const response = await narvi.someFilteredEndpoint.list({
+  added__gte: startTime,
+  added__lte: endTime,
+  amount__gte: minAmount,
+  amount__lte: maxAmount
+});
+
+```
+
+You can customize the filter criteria according to your application's needs.
+
+By leveraging the pagination system, cursor-based navigation, and filtering capabilities, you can efficiently manage and retrieve the data you require from Narvi's API while ensuring a smooth user experience in your application.
+
+
+
 For more details and examples, please refer to our official [Narvi API documentation](https://my.narvi.com/doc).
 
 Happy integrating with Narvi! 🚀

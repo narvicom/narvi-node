@@ -403,6 +403,16 @@ export function getPathFromUrl(url: string) {
   return url?.split('?')?.[0] || ''
 }
 
+export function getQueryFromUrl(url: string) {
+  // Removes path string
+  return url?.split('?')?.[1] || ''
+}
+
+export function getPaginationCursor(url: string)  {
+  const result = qs.parse(getQueryFromUrl(url))
+  return (result?.cursor || '')
+}
+
 export function loadPrivateKeyFromFile(privateKeyFilePath: string) {
   const privatePem = fs.readFileSync(privateKeyFilePath)
   const privateKey = crypto.createPrivateKey({

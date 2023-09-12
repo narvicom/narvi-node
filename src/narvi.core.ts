@@ -5,6 +5,7 @@ import {
   validateInteger,
   pascalToCamelCase,
   loadPrivateKeyFromFile,
+  getPaginationCursor,
 } from './utils/utils'
 import * as resources from './api/resources/resources'
 import { NarviResource } from './api/resources/NarviResource'
@@ -266,6 +267,8 @@ export function createNarvi(
     getInitialNetworkRetryDelay(): number {
       return INITIAL_NETWORK_RETRY_DELAY_SEC
     },
+
+    getPaginationCursor,
 
     /**
      * @private

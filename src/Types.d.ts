@@ -153,6 +153,7 @@ export type NarviObject = {
   getInitialNetworkRetryDelay: () => number
   getMaxNetworkRetryDelay: () => number
   getMaxNetworkRetries: () => number
+  getPaginationCursor: (url: string) => number
   _requestSender: RequestSender
   _platformFunctions: PlatformFunctions
   _setApiField: <K extends keyof NarviObject['_api']>(

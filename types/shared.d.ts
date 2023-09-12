@@ -143,24 +143,24 @@ declare module 'narvi' {
 
     interface RangeQueryParam {
       /**
-       * Minimum value to filter by (exclusive)
+       * Minimum date value to filter by (inclusive)
        */
-      gt?: number
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number
+      added__gte?: number
 
       /**
        * Maximum value to filter by (inclusive)
        */
-      lte?: number
+      added__lte?: number
+
+      /**
+       * Minimum amount value to filter by (inclusive)
+       */
+      amount__gte?: number
+
+      /**
+       * Maximum amount value to filter by (inclusive)
+       */
+      amount__lte?: number
     }
 
     /**
@@ -168,19 +168,9 @@ declare module 'narvi' {
      */
     interface PaginationParams {
       /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       * A cursor for use in pagination. `cursor` is a cursor ID that defines your place in the list. For instance, if you make a list request and receive the first 20 objects, your subsequent call can look like that `await.accounts.list({ cursor: CURSOR_ID })` in order to fetch the next page of the list.
        */
-      ending_before?: string
 
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string
     }
   }
 }

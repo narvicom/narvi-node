@@ -34,6 +34,7 @@ declare module 'narvi' {
 
     interface TransactionsListParams extends PaginationParams {
       account_pid: string
+      kind?: string
     }
 
     class TransactionsResource {
