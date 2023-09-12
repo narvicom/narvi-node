@@ -158,6 +158,7 @@ export function createNarvi(
   Narvi.createNodeCryptoProvider = platformFunctions.createNodeCryptoProvider
   Narvi.createSubtleCryptoProvider =
     platformFunctions.createSubtleCryptoProvider
+  Narvi.getPaginationCursor = getPaginationCursor
 
   /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
   // @ts-ignore
@@ -267,8 +268,6 @@ export function createNarvi(
     getInitialNetworkRetryDelay(): number {
       return INITIAL_NETWORK_RETRY_DELAY_SEC
     },
-
-    getPaginationCursor,
 
     /**
      * @private

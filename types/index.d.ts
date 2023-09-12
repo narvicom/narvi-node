@@ -26,6 +26,7 @@ declare module 'narvi' {
      * API Errors
      */
     // errors: typeof Narvi.errors
+    getPaginationCursor: (url: string) => string
   }
 
   export default Narvi
