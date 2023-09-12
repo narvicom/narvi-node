@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec
 
-import { ACCOUNT_ID } from '../src/_test-constants'
-
 declare module 'narvi' {
   namespace Narvi {
     interface TransactionsCreateParams {
@@ -12,6 +10,9 @@ declare module 'narvi' {
         name: string
         number: string
         bic: string
+        address: string
+        city: string
+        zip_code: string
         country: string
       }
       remittance_information: {

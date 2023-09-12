@@ -110,18 +110,20 @@ To create a new transaction using the Narvi API, you'll need to provide a payloa
 
 ```typescript
 interface TransactionPayload {
-  account_pid: string; // Unique identifier for the Narvi account
-  currency: string; // Currency code, e.g., 'EUR'
-  amount: number; // Transaction amount
+  account_pid: string; // Unique identifier for the Narvi accountm e.g., 'A2ERSYBWO9KTC4I4'
+  currency: string;    // Currency code, e.g., 'EUR'
+  amount: number;      // Transaction amount in cents. For "EUR 120,00.99" it would be: 12099
   recipient: {
-    name: string; // Recipient's name
-    number: string; // Recipient's bank account number
-    bic: string; // Recipient's BIC (Bank Identifier Code)
-    country: string; // Recipient's country code, e.g., 'PL'
+    name: string;      // Recipient's name, e.g. 'Simo Hayha'
+    number: string;    // Recipient's bank account number e.g. 'FI4179600176830755'
+    bic: string;       // Recipient's BIC (Bank Identifier Code) e.g.'NARYFIH2'
+    address: string    // Recipient's address, usually a street name with number, e.g., 'Lapinlahdenkatu 16'
+    city: string;      // Recipient's city name, e.g., 'Helsinki'
+    zip_code: string;  // Recipient's zip code, e.g., '00180'
+    country: string;   // Recipient's country code, e.g., 'FI'
   };
   remittance_information: {
-    ustrd: string; // Unstructured remittance information
-    // You can add more fields for structured remittance information if needed
+    ustrd: string;     // Transfer title:, e.g., 'Payment for educational course'
   };
 }
 ```
