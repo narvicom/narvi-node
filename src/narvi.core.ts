@@ -15,6 +15,7 @@ import { PlatformFunctions } from './platform/PlatformFunctions'
 import { CryptoProvider } from './crypto/CryptoProvider'
 
 import { NarviObject } from './Types'
+import { version } from "../version";
 
 export type UserProvidedConfig = {
   apiKeyId: string
@@ -66,7 +67,7 @@ export function createNarvi(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory,
 ): typeof Narvi {
-  Narvi.PACKAGE_VERSION = '13.3.0'
+  Narvi.PACKAGE_VERSION = version
   Narvi.USER_AGENT = {
     bindings_version: Narvi.PACKAGE_VERSION,
     lang: 'node',

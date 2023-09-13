@@ -1,0 +1,82 @@
+{
+  "hooks": {
+    "after:bump": [
+      "genversion --es6 ./version.ts"
+    ]
+  },
+  "git": {
+    "requireCleanWorkingDir": false
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "feature",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "build",
+            "section": "Build related"
+          },
+          {
+            "type": "chore",
+            "section": "Chores"
+          },
+          {
+            "type": "chores",
+            "section": "Chores"
+          },
+          {
+            "type": "ci",
+            "section": "CI/CD"
+          },
+          {
+            "type": "docs",
+            "section": "Documentation"
+          },
+          {
+            "type": "style",
+            "section": "Style"
+          },
+          {
+            "type": "refactor",
+            "section": "Refactor"
+          },
+          {
+            "type": "test",
+            "section": "Tests"
+          },
+          {
+            "type": "tests",
+            "section": "Tests"
+          },
+          {
+            "type": "perf",
+            "section": "Performance"
+          }
+        ]
+      },
+      "parserOpts": {
+        "issuePrefixes": [
+          "NRV-"
+        ]
+      },
+      "writerOpts": {
+        "issuePrefixes": [
+          "NRV-"
+        ]
+      }
+    }
+  }
+}

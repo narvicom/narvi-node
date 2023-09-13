@@ -1,6 +1,6 @@
 {
   "name": "narvi",
-  "version": "1.1.1",
+  "version": "1.1.4",
   "description": "Narvi API wrapper",
   "keywords": [
     "narvi",
@@ -32,6 +32,9 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "3.4.1",
+    "genversion": "3.1.1",
+    "release-it": "16.1.5",
+    "@release-it/conventional-changelog": "7.0.0",
     "ts-node": "10.9.1",
     "typescript": "4.9.4"
   },
@@ -52,7 +55,9 @@
     "build": "yarn build-esm && yarn build-cjs",
     "build-esm": "mkdir -p esm && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > esm/package.json",
     "build-cjs": "mkdir -p cjs && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
-    "prepack": "yarn install && yarn build"
+    "prepack": "yarn install && yarn build",
+    "r": "yarn release-it --ci",
+    "rc": "yarn r --dry-run"
   },
   "exports": {
     "types": "./types/index.d.ts",
