@@ -10,10 +10,10 @@ declare module 'narvi' {
         name: string
         number: string
         bic: string
-        address: string
-        city: string
-        zip_code: string
-        country: string
+        address?: string | null
+        city?: string | null
+        zip_code?: string | null
+        country?: string | null
       }
       remittance_information: {
         ustrd: string
