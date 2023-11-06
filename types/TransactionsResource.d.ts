@@ -9,7 +9,6 @@ declare module 'narvi' {
       recipient: {
         name: string
         number: string
-        bic: string
         address?: string | null
         city?: string | null
         zip_code?: string | null

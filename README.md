@@ -116,7 +116,6 @@ interface TransactionPayload {
   recipient: {
     name: string;      // Recipient's name, e.g. 'Simo Hayha'
     number: string;    // Recipient's bank account number e.g. 'FI4179600176830755'
-    bic: string;       // Recipient's BIC (Bank Identifier Code) e.g.'NARYFIH2'
     address: string    // Recipient's address, usually a street name with number, e.g., 'Lapinlahdenkatu 16'
     city: string;      // Recipient's city name, e.g., 'Helsinki'
     zip_code: string;  // Recipient's zip code, e.g., '00180'
