@@ -6,10 +6,13 @@ declare module 'narvi' {
      * Accounts represents user accounts
      */
     interface Accounts {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string
+      pid: string,
+      number: string,
+      role: string,
+      balance:  number,
+      currency: string,
+      name: string,
+      kind: string
     }
 
     namespace Accounts {}

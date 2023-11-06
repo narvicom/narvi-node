@@ -173,14 +173,12 @@ By using the cursor, you can pinpoint the exact position in the paginated datase
 
 Additionally, Narvi's API provides the `RangeQueryParam` interface, which you can use to filter resources based on specific criteria such as date range or amount range. These filters can be applied when making requests to certain endpoints that support filtering.
 
-Example usage for filtering based on date and amount range:
+Example usage for filtering based on date range:
 
 ```typescript
 const response = await narvi.someFilteredEndpoint.list({
   added__gte: startTime,
   added__lte: endTime,
-  amount__gte: minAmount,
-  amount__lte: maxAmount
 });
 
 ```
