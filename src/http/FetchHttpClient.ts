@@ -1,9 +1,4 @@
-import {
-  HttpClient,
-  HttpClientInterface,
-  HttpClientResponse,
-  HttpClientResponseInterface,
-} from './HttpClient'
+import { HttpClient, HttpClientInterface, HttpClientResponse, HttpClientResponseInterface, } from './HttpClient'
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.
@@ -33,20 +28,20 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
   }
 
   makeRequest(
-    host: string,
-    port: string,
-    path: string,
-    method: string,
-    headers: RequestHeaders,
-    requestData: RequestData,
-    protocol: string,
-    timeout: number,
+      host: string,
+      port: string,
+      path: string,
+      method: string,
+      headers: RequestHeaders,
+      requestData: RequestData,
+      protocol: string,
+      timeout: number,
   ): Promise<HttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http'
 
     const url = new URL(
-      path,
-      `${isInsecureConnection ? 'http' : 'https'}://${host}`,
+        path,
+        `${isInsecureConnection ? 'http' : 'https'}://${host}`,
     )
     url.port = port
 
@@ -54,10 +49,12 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     // even when it is empty. Without this, some JS runtimes (eg. Deno) will
     // inject a second Content-Length header.
     const methodHasPayload =
-      method === 'POST' || method === 'PUT' || method === 'PATCH'
+        method === 'POST' || method === 'PUT' || method === 'PATCH'
     const body = requestData || (methodHasPayload ? '' : undefined)
 
     const fetchFn = this._fetchFn || fetch
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const fetchPromise = fetchFn(url.toString(), {
       method,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -90,27 +87,26 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     })
 
     return Promise.race([fetchPromise, timeoutPromise])
-      .then((res) => {
-        return new FetchHttpClientResponse(res as Response)
-      })
-      .finally(() => {
-        if (pendingTimeoutId) {
-          clearTimeout(pendingTimeoutId)
-        }
-      })
+        .then((res) => {
+          return new FetchHttpClientResponse(res as Response)
+        })
+        .finally(() => {
+          if (pendingTimeoutId) {
+            clearTimeout(pendingTimeoutId)
+          }
+        })
   }
 }
 
 export class FetchHttpClientResponse
-  extends HttpClientResponse
-  implements HttpClientResponseInterface
-{
+    extends HttpClientResponse
+    implements HttpClientResponseInterface {
   _res: Response
 
   constructor(res: Response) {
     super(
-      res.status,
-      FetchHttpClientResponse._transformHeadersToObject(res.headers),
+        res.status,
+        FetchHttpClientResponse._transformHeadersToObject(res.headers),
     )
     this._res = res
   }
@@ -120,7 +116,7 @@ export class FetchHttpClientResponse
   }
 
   toStream(
-    streamCompleteCallback: () => void,
+      streamCompleteCallback: () => void,
   ): ReadableStream<Uint8Array> | null {
     // Unfortunately `fetch` does not have event handlers for when the stream is
     // completely read. We therefore invoke the streamCompleteCallback right
@@ -146,7 +142,7 @@ export class FetchHttpClientResponse
     for (const entry of headers) {
       if (!Array.isArray(entry) || entry.length !== 2) {
         throw new Error(
-          'Response objects produced by the fetch function given to FetchHttpClient do not have an iterable headers map. Response#headers should be an iterable object.',
+            'Response objects produced by the fetch function given to FetchHttpClient do not have an iterable headers map. Response#headers should be an iterable object.',
         )
       }
 
