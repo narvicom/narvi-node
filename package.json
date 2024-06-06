@@ -57,7 +57,8 @@
     "build-cjs": "mkdir -p cjs && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
     "prepack": "yarn install && yarn build",
     "r": "release-it --ci",
-    "rc": "release-it --ci --dry-run"
+    "rc": "release-it --ci --dry-run",
+    "publish": "npm publish --access public"
   },
   "exports": {
     "types": "./types/index.d.ts",
