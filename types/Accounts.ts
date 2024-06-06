@@ -8,7 +8,6 @@ declare module 'narvi' {
     interface Accounts {
       pid: string,
       number: string,
-      role: string,
       balance:  number,
       currency: string,
       name: string,
