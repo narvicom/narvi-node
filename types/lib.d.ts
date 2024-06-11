@@ -38,7 +38,7 @@ declare module 'narvi' {
       /**
        * Required. Your individual API Key ID.
        * You can generate it here:
-       * https://my.narvi.com/settings/overview/api
+       * https://my.narvi.com/app/developers/config/api-keys
        */
       apiKeyId: string
 
@@ -46,7 +46,7 @@ declare module 'narvi' {
        * Required. Path to your narvi_private.pem key file,
        * which was generated during the process of obtaining your API Key ID.
        * It is used to sign your API requests.
-       * https://my.narvi.com/settings/overview/api
+       * https://my.narvi.com/app/developers/config/api-keys
        */
       privateKeyFilePath: string
 
@@ -60,7 +60,6 @@ declare module 'narvi' {
        * you may pass `null` or another version instead of the latest version,
        * and add a `@ts-ignore` comment here and anywhere the types differ between API versions.
        *
-       * @docs https://narvi.com/docs/api/versioning
        */
       apiVersion?: LatestApiVersion
 
@@ -74,7 +73,6 @@ declare module 'narvi' {
        * Specifies maximum number of automatic network retries (default 1).
        * Retries will be attempted with exponential backoff.
        * Retries can be disabled by setting this option to 0.
-       * [Idempotency keys](https://narvi.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
        * @docs https://github.com/narvi/narvi-node#network-retries
        */
       maxNetworkRetries?: number
@@ -133,9 +131,6 @@ declare module 'narvi' {
        */
       apiKey?: string
 
-      /**
-       * See the [idempotency key docs](https://narvi.com/docs/api/idempotent_requests).
-       */
       idempotencyKey?: string
 
       /**
@@ -143,9 +138,6 @@ declare module 'narvi' {
        */
       narviAccount?: string
 
-      /**
-       * The [API Version](https://narvi.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
-       */
       apiVersion?: string
 
       /**
@@ -180,9 +172,6 @@ declare module 'narvi' {
      * A container for paginated lists of objects.
      * The array of objects is on the `.data` property,
      * and `.has_more` indicates whether there are additional objects beyond the end of this list.
-     *
-     * Learn more in Narvi's [pagination docs](https://narvi.com/docs/api/pagination?lang=node)
-     * or, when iterating over many items, try [auto-pagination](https://github.com/narvi/narvi-node#auto-pagination) instead.
      */
     export interface ApiList<T> {
       object: 'list'

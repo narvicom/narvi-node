@@ -200,7 +200,6 @@ export class RequestSender {
     }`
   }
 
-  // For more on when and how to retry API requests, see https://narvi.com/docs/error-handling#safely-retrying-requests-with-idempotency
   static _shouldRetry(
     res: null | HttpClientResponseInterface,
     numRetries: number,

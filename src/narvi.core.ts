@@ -33,7 +33,7 @@ export type UserProvidedConfig = {
   dev?: boolean
 }
 
-const DEFAULT_HOST = 'my.narvi.com'
+const DEFAULT_HOST = 'api.narvi.com'
 const DEFAULT_PORT = '443'
 const DEFAULT_BASE_PATH = '/v1/'
 const DEFAULT_API_VERSION = apiVersion.ApiVersion

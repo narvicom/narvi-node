@@ -100,23 +100,14 @@ declare module 'src/app/narvi' {
           | 'NarviIdempotencyError'
           | 'NarviInvalidGrantError'
 
-        /**
-         * See the "error types" section at https://narvi.com/docs/api/errors
-         */
         readonly rawType: RawErrorType
 
         /**
          * For card errors, a short string describing the kind of card error that occurred.
-         *
-         * @docs https://narvi.com/docs/error-codes
-         */
         readonly code?: string
 
         /**
          * A URL to more information about the error code reported.
-         *
-         * @docs https://narvi.com/docs/error-codes
-         */
         readonly doc_url?: string
 
         /**
@@ -151,9 +142,6 @@ declare module 'src/app/narvi' {
         readonly type: 'NarviCardError'
         readonly rawType: 'card_error'
 
-        /**
-         * @docs https://narvi.com/docs/declines/codes
-         */
         readonly decline_code: string
       }
 
@@ -192,10 +180,6 @@ declare module 'src/app/narvi' {
         readonly type: 'NarviPermissionError'
       }
 
-      /**
-       * Too many requests hit the API too quickly.
-       * @docs https://narvi.com/docs/rate-limits
-       */
       class NarviRateLimitError extends NarviError {
         readonly type: 'NarviRateLimitError'
         readonly rawType: 'rate_limit_error'
@@ -212,7 +196,6 @@ declare module 'src/app/narvi' {
 
       /**
        * The signature verification for a webhook failed.
-       * @docs https://narvi.com/docs/webhooks/signatures
        */
       class NarviSignatureVerificationError extends NarviError {
         readonly type: 'NarviSignatureVerificationError'
@@ -220,7 +203,6 @@ declare module 'src/app/narvi' {
 
       /**
        * Idempotency errors occur when an `Idempotency-Key` is re-used on a request that does not match the first request's API endpoint and parameters.
-       * @docs https://narvi.com/docs/api/idempotent_requests?lang=node
        */
       class NarviIdempotencyError extends NarviError {
         readonly type: 'NarviIdempotencyError'

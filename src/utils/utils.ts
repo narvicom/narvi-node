@@ -448,7 +448,7 @@ export function signRequest(params: SignRequestParams) {
 
   const dataToHash = hash_elems.join('')
   // const dataToHash =
-  //   'https://devmy.narvi.com/rest/v1.0/transactions/createPOST1693488172942{"account_pid":"RPUEWWNVLN04JE45","amount":1,"currency":"EUR","recipient":{"country":"PL","name":"Uncle","number":"PL61109010140000071219812874"},"remittance_information":{"ustrd":"test transfer"}}'
+  //   'https://api.narvi.com/rest/v1.0/transactions/createPOST1693488172942{"account_pid":"RPUEWWNVLN04JE45","amount":1,"currency":"EUR","recipient":{"country":"PL","name":"Uncle","number":"PL61109010140000071219812874"},"remittance_information":{"ustrd":"test transfer"}}'
 
   const hash = crypto.createHash('sha256').update(dataToHash).digest()
   const hashHax = crypto.createHash('sha256').update(dataToHash).digest('hex')

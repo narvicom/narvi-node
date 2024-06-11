@@ -27,7 +27,7 @@ npm install --save narvi
 
 Authentication for the Narvi API is crucial for security. We use API keys and private keys to verify requests. To manage
 your API keys, visit our web application
-at [my.narvi.com/settings/overview/api](https://my.narvi.com/settings/overview/api)
+at [https://my.narvi.com/app/developers/config/api-keys](https://my.narvi.com/app/developers/config/api-keys)
 
 Remember, your API keys grant significant privileges, so keep them secure! Avoid sharing your secret API keys in
 publicly accessible areas such as GitHub or client-side code.
@@ -188,6 +188,6 @@ By leveraging the pagination system, cursor-based navigation, and filtering capa
 
 
 
-For more details and examples, please refer to our official [Narvi API documentation](https://my.narvi.com/doc).
+For more details and examples, please refer to our official [Narvi API documentation](https://api.narvi.com/).
 
 Happy integrating with Narvi! 🚀

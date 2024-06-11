@@ -134,7 +134,7 @@ declare module 'narvi' {
     }
 
     /**
-     * The resulting source of [a Connect platform debiting a connected account](https://narvi.com/docs/connect/account-debits#charging-a-connected-account).
+     * The resulting source of [a Connect platform debiting a connected account]
      */
     type AccountDebitSource = {
       id: string
@@ -163,9 +163,6 @@ declare module 'narvi' {
       amount__lte?: number
     }
 
-    /**
-     * @docs https://narvi.com/docs/api/pagination
-     */
     interface PaginationParams {
       /**
        * A cursor for use in pagination. `cursor` is a cursor ID that defines your place in the list. For instance, if you make a list request and receive the first 20 objects, your subsequent call can look like that `await.accounts.list({ cursor: CURSOR_ID })` in order to fetch the next page of the list.
