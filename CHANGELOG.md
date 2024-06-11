@@ -1,5 +1,7 @@
 
 
+## [1.1.17](https://github.com/narvicom/narvi-node/compare/1.1.15...1.1.17) (2024-06-11)
+
 ## [1.1.16](https://github.com/narvicom/narvi-node/compare/1.1.15...1.1.16) (2024-06-06)
 
 ## [1.1.15](https://github.com/narvicom/narvi-node/compare/1.1.14...1.1.15) (2024-06-06)
