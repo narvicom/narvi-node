@@ -1,21 +1,23 @@
 import {
   getDataFromArgs,
+  getNarviRequestHeaders,
   getOptionsFromArgs,
+  getNarviRequestSignaturePayload,
   makeURLInterpolator,
   protoExtend,
-  signRequest,
+  getNarviRequestSignature,
   stringifyRequestData,
 } from '../../utils/utils'
 import { narviMethod } from '../requests/NarviMethod'
 import {
+  MethodSpec,
+  NarviObject,
   NarviResourceObject,
   RequestArgs,
-  MethodSpec,
   RequestData,
+  RequestHeaders,
   RequestOpts,
   UrlInterpolator,
-  RequestHeaders,
-  NarviObject,
 } from '../../Types'
 import { HttpClientResponseInterface } from '../../http/HttpClient'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -33,21 +35,21 @@ NarviResource.MAX_BUFFERED_REQUEST_METRICS = 100
  * Encapsulates request logic for a Narvi Resource
  */
 function NarviResource(
-  this: NarviResourceObject,
-  narvi: NarviObject,
-  deprecatedUrlData?: never,
+    this: NarviResourceObject,
+    narvi: NarviObject,
+    deprecatedUrlData?: never,
 ): void {
   this._narvi = narvi
   if (deprecatedUrlData) {
     throw new Error(
-      'Support for curried url params was dropped in narvi-node v7.0.0. Instead, pass two ids.',
+        'Support for curried url params was dropped in narvi-node v7.0.0. Instead, pass two ids.',
     )
   }
 
   this.basePath = makeURLInterpolator(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore changing type of basePath
-    this.basePath || narvi.getApiField('basePath'),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore changing type of basePath
+      this.basePath || narvi.getApiField('basePath'),
   )
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore changing type of path
@@ -71,7 +73,8 @@ NarviResource.prototype = {
   basePath: null!,
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  initialize(): void {},
+  initialize(): void {
+  },
 
   // Function to override the default data processor. This allows full control
   // over how a NarviResource's request data will get converted into an HTTP
@@ -84,8 +87,8 @@ NarviResource.prototype = {
   validateRequest: null,
 
   createFullPath(
-    commandPath: string | ((urlData: Record<string, unknown>) => string),
-    urlData: Record<string, unknown>,
+      commandPath: string | ((urlData: Record<string, unknown>) => string),
+      urlData: Record<string, unknown>,
   ): string {
     const urlParts = [this.basePath(urlData), this.path(urlData)]
 
@@ -126,9 +129,9 @@ NarviResource.prototype = {
   },
 
   _getRequestOpts(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData,
+      requestArgs: RequestArgs,
+      spec: MethodSpec,
+      overrideData: RequestData,
   ): RequestOpts {
     // Extract spec values with defaults.
     const requestMethod = (spec.method || 'GET').toUpperCase()
@@ -137,13 +140,13 @@ NarviResource.prototype = {
 
     const isUsingFullPath = !!spec.fullPath
     const commandPath: UrlInterpolator = makeURLInterpolator(
-      isUsingFullPath ? spec.fullPath! : spec.path || '',
+        isUsingFullPath ? spec.fullPath! : spec.path || '',
     )
     // When using fullPath, we ignore the resource path as it should already be
     // fully qualified.
     const path = isUsingFullPath
-      ? spec.fullPath
-      : this.createResourcePathWithSymbols(spec.path)
+        ? spec.fullPath
+        : this.createResourcePathWithSymbols(spec.path)
 
     // Don't mutate args externally.
     const args: RequestArgs = [].slice.call(requestArgs)
@@ -153,7 +156,7 @@ NarviResource.prototype = {
       const arg = args.shift()
       if (typeof arg !== 'string') {
         throw new Error(
-          `Narvi: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`,
+            `Narvi: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`,
         )
       }
 
@@ -170,15 +173,15 @@ NarviResource.prototype = {
     // Validate that there are no more args.
     if (args.filter((x) => x !== null).length) {
       throw new Error(
-        `Narvi: Unknown arguments (${args}). Did you mean to pass an options object? See https://github.com/narvi/narvi-node/wiki/Passing-Options. (on API request to ${requestMethod} \`${path}\`)`,
+          `Narvi: Unknown arguments (${args}). Did you mean to pass an options object? See https://github.com/narvi/narvi-node/wiki/Passing-Options. (on API request to ${requestMethod} \`${path}\`)`,
       )
     }
 
     // When using full path, we can just invoke the URL interpolator directly
     // as we don't need to use the resource to create a full path.
     const requestPath = isUsingFullPath
-      ? commandPath(urlData)
-      : this.createFullPath(commandPath, urlData)
+        ? commandPath(urlData)
+        : this.createFullPath(commandPath, urlData)
 
     const headers = Object.assign(options.headers, spec.headers)
 
@@ -204,9 +207,9 @@ NarviResource.prototype = {
   },
 
   _makeRequest(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData,
+      requestArgs: RequestArgs,
+      spec: MethodSpec,
+      overrideData: RequestData,
   ): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let opts: RequestOpts
@@ -218,24 +221,24 @@ NarviResource.prototype = {
       }
 
       function requestCallback(
-        err: any,
-        response: HttpClientResponseInterface,
+          err: any,
+          response: HttpClientResponseInterface,
       ): void {
         if (err) {
           reject(err)
         } else {
           resolve(
-            spec.transformResponseData
-              ? spec.transformResponseData(response)
-              : response,
+              spec.transformResponseData
+                  ? spec.transformResponseData(response)
+                  : response,
           )
         }
       }
 
       const methodHasPayload =
-        opts.requestMethod === 'POST' ||
-        opts.requestMethod === 'PUT' ||
-        opts.requestMethod === 'PATCH'
+          opts.requestMethod === 'POST' ||
+          opts.requestMethod === 'PUT' ||
+          opts.requestMethod === 'PATCH'
       const emptyQuery = Object.keys(opts.queryData).length === 0
       const path = [
         opts.requestPath,
@@ -254,39 +257,39 @@ NarviResource.prototype = {
         path,
       ].join('')
 
-      const signaturePayload = {
+      const signaturePayload = getNarviRequestSignaturePayload({
         privateKey: this._narvi.getApiField('privateKey'),
         url,
         method: opts.requestMethod,
         timestamp,
         queryParams: opts.queryData,
         payload: isEmpty(opts.bodyData) ? undefined : opts.bodyData,
-      }
+      })
 
-      const signature = signRequest(signaturePayload)
+      const signature = getNarviRequestSignature(signaturePayload)
 
       const addNarviHeaders = (headers: RequestHeaders) => ({
         ...headers,
-        'API-KEY-ID': this._narvi.getApiField('apiKeyId'),
-        'API-REQUEST-TIMESTAMP': timestamp,
-        'API-REQUEST-SIGNATURE': signature,
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Type': 'application/json',
+        ...getNarviRequestHeaders({
+          apiKeyId: this._narvi.getApiField('apiKeyId'),
+          timestamp,
+          signature
+        })
       })
 
       this._narvi._requestSender._request(
-        opts.requestMethod,
-        opts.host,
-        path,
-        opts.bodyData,
-        opts.auth,
-        {
-          headers: addNarviHeaders(headers),
-          settings,
-          streaming: opts.streaming,
-        },
-        requestCallback,
-        this.requestDataProcessor?.bind(this),
+          opts.requestMethod,
+          opts.host,
+          path,
+          opts.bodyData,
+          opts.auth,
+          {
+            headers: addNarviHeaders(headers),
+            settings,
+            streaming: opts.streaming,
+          },
+          requestCallback,
+          this.requestDataProcessor?.bind(this),
       )
     })
   },

@@ -9,6 +9,7 @@ import {
 } from '../Types'
 import * as fs from 'fs'
 import * as crypto from 'crypto'
+import { KeyObject } from "crypto";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jsonStringify = require('json-stable-stringify')
@@ -40,9 +41,9 @@ type Options = {
 
 export function isOptionsHash(o: unknown): boolean | unknown {
   return (
-    o &&
-    typeof o === 'object' &&
-    OPTIONS_KEYS.some((prop) => Object.prototype.hasOwnProperty.call(o, prop))
+      o &&
+      typeof o === 'object' &&
+      OPTIONS_KEYS.some((prop) => Object.prototype.hasOwnProperty.call(o, prop))
   )
 }
 
@@ -51,8 +52,8 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * (forming the conventional key 'parent[child]=value')
  */
 export function stringifyRequestData(
-  data: RequestData | string,
-  hasPayload: boolean,
+    data: RequestData | string,
+    hasPayload: boolean,
 ): string {
   if (isEmpty(data)) {
     // REGULAR GET REQUEST
@@ -62,15 +63,15 @@ export function stringifyRequestData(
   if (!hasPayload) {
     // GET REQUEST WITH QUERY STRING
     return (
-      qs
-        .stringify(data, {
-          serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-        })
-        // Don't use strict form encoding by changing the square bracket control
-        // characters back to their literals. This is fine by the server, and
-        // makes these parameter strings easier to read.
-        .replace(/%5B/g, '[')
-        .replace(/%5D/g, ']')
+        qs
+            .stringify(data, {
+              serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+            })
+            // Don't use strict form encoding by changing the square bracket control
+            // characters back to their literals. This is fine by the server, and
+            // makes these parameter strings easier to read.
+            .replace(/%5B/g, '[')
+            .replace(/%5D/g, ']')
     )
   }
 
@@ -95,9 +96,9 @@ export const makeURLInterpolator = ((): ((s: string) => UrlInterpolator) => {
     const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0])
     return (outputs: Record<string, unknown>): string => {
       return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        encodeURIComponent(outputs[$1] || ''),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          encodeURIComponent(outputs[$1] || ''),
       )
     }
   }
@@ -136,13 +137,13 @@ export function getDataFromArgs(args: RequestArgs): RequestData {
   // (the first being args and the second options) and with known
   // option keys in the first so that we can warn the user about it.
   if (
-    optionKeysInArgs.length > 0 &&
-    optionKeysInArgs.length !== argKeys.length
+      optionKeysInArgs.length > 0 &&
+      optionKeysInArgs.length !== argKeys.length
   ) {
     emitWarning(
-      `Options found in arguments (${optionKeysInArgs.join(
-        ', ',
-      )}). Did you mean to pass an options object? See passing-options paragraph in our README..`,
+        `Options found in arguments (${optionKeysInArgs.join(
+            ', ',
+        )}). Did you mean to pass an options object? See passing-options paragraph in our README..`,
     )
   }
 
@@ -167,12 +168,12 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       const params = { ...(args.pop() as Record<string, unknown>) }
 
       const extraKeys = Object.keys(params).filter(
-        (key) => !OPTIONS_KEYS.includes(key),
+          (key) => !OPTIONS_KEYS.includes(key),
       )
 
       if (extraKeys.length) {
         emitWarning(
-          `Invalid options found (${extraKeys.join(', ')}); ignoring.`,
+            `Invalid options found (${extraKeys.join(', ')}); ignoring.`,
         )
       }
 
@@ -225,7 +226,7 @@ export function removeNullish<T extends Record<string, unknown>>(obj: T): T {
  * {'Foo-Bar': 'hi'}
  */
 export function normalizeHeaders(
-  obj: RequestHeaders | null,
+    obj: RequestHeaders | null,
 ): RequestHeaders | null {
   if (!(obj && typeof obj === 'object')) {
     return obj
@@ -243,28 +244,28 @@ export function normalizeHeaders(
  */
 export function normalizeHeader(header: string): string {
   return header
-    .split('-')
-    .map((text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase())
-    .join('-')
+      .split('-')
+      .map((text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase())
+      .join('-')
 }
 
 export function callbackifyPromiseWithTimeout<T>(
-  promise: Promise<T>,
-  callback: ((error: unknown, result: T | null) => void) | null,
+    promise: Promise<T>,
+    callback: ((error: unknown, result: T | null) => void) | null,
 ): Promise<T | void> {
   if (callback) {
     // Ensure callback is called outside of promise stack.
     return promise.then(
-      (res) => {
-        setTimeout(() => {
-          callback(null, res)
-        }, 0)
-      },
-      (err) => {
-        setTimeout(() => {
-          callback(err, null)
-        }, 0)
-      },
+        (res) => {
+          setTimeout(() => {
+            callback(null, res)
+          }, 0)
+        },
+        (err) => {
+          setTimeout(() => {
+            callback(err, null)
+          }, 0)
+        },
     )
   }
 
@@ -285,7 +286,7 @@ export function pascalToCamelCase(name: string): string {
 export function emitWarning(warning: string): void {
   if (typeof process.emitWarning !== 'function') {
     return console.warn(
-      `Narvi: ${warning}`,
+        `Narvi: ${warning}`,
     ) /* eslint-disable-line no-console */
   }
 
@@ -299,7 +300,7 @@ export function isObject(obj: unknown): boolean {
 
 // For use in multipart requests
 export function flattenAndStringify(
-  data: MultipartRequestData,
+    data: MultipartRequestData,
 ): Record<string, string | Uint8Array> {
   const result: Record<string, string | Uint8Array> = {}
 
@@ -313,8 +314,8 @@ export function flattenAndStringify(
 
       if (isObject(value)) {
         if (
-          !(value instanceof Uint8Array) &&
-          !Object.prototype.hasOwnProperty.call(value, 'data')
+            !(value instanceof Uint8Array) &&
+            !Object.prototype.hasOwnProperty.call(value, 'data')
         ) {
           // Non-buffer non-file Objects are recursively flattened
           return step(value, newKey)
@@ -335,9 +336,9 @@ export function flattenAndStringify(
 }
 
 export function validateInteger(
-  name: string,
-  n: unknown,
-  defaultVal?: number,
+    name: string,
+    n: unknown,
+    defaultVal?: number,
 ): number {
   if (!Number.isInteger(n)) {
     if (defaultVal !== undefined) {
@@ -352,8 +353,8 @@ export function validateInteger(
 
 export function determineProcessUserAgentProperties(): Record<string, string> {
   return typeof process === 'undefined'
-    ? {}
-    : {
+      ? {}
+      : {
         lang_version: process.version,
         platform: process.platform,
       }
@@ -376,16 +377,16 @@ export function concat(arrays: Array<Uint8Array>): Uint8Array {
 }
 
 export function protoExtend(
-  this: any,
-  sub: any,
+    this: any,
+    sub: any,
 ): {
-  new (...args: any[]): NarviResourceObject
+  new(...args: any[]): NarviResourceObject
 } {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Super = this
   const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
-    ? sub.constructor
-    : function (this: NarviResourceObject, ...args: any[]): void {
+      ? sub.constructor
+      : function (this: NarviResourceObject, ...args: any[]): void {
         Super.apply(this, args)
       }
 
@@ -408,7 +409,7 @@ export function getQueryFromUrl(url: string) {
   return url?.split('?')?.[1] || ''
 }
 
-export function getPaginationCursor(url: string)  {
+export function getPaginationCursor(url: string) {
   const result = qs.parse(getQueryFromUrl(url))
   return (result?.cursor || '')
 }
@@ -431,7 +432,7 @@ interface SignRequestParams {
   payload?: any
 }
 
-export function signRequest(params: SignRequestParams) {
+export function getNarviRequestSignature(params: SignRequestParams) {
   const { privateKey, url, method, timestamp, queryParams, payload } = params
 
   const hash_elems = [getPathFromUrl(url), method, timestamp]
@@ -459,3 +460,49 @@ export function signRequest(params: SignRequestParams) {
 
   return signatureString
 }
+
+interface GetNarviRequestHeadersParams {
+  apiKeyId: string
+  timestamp: string
+  signature: string
+}
+
+export const getNarviRequestHeaders = (params: GetNarviRequestHeadersParams) => {
+  const { apiKeyId, timestamp, signature } = params
+
+  return ({
+    'API-KEY-ID': apiKeyId,
+    'API-REQUEST-TIMESTAMP': timestamp,
+    'API-REQUEST-SIGNATURE': signature,
+    'Content-Type': 'application/json',
+  })
+}
+
+      interface GetNarviSignaturePayloadParams {
+        privateKey: KeyObject
+        url: string
+        method: string
+        timestamp: string
+        queryParams?: RequestData
+        payload?: RequestData
+      }
+
+      export const getNarviRequestSignaturePayload = (params: GetNarviSignaturePayloadParams) => {
+        const {
+          privateKey,
+          url,
+          method,
+          timestamp,
+          queryParams,
+          payload,
+        } = params
+
+        return ({
+          privateKey,
+          url,
+          method,
+          timestamp,
+          queryParams,
+          payload: isEmpty(payload) ? undefined : payload
+        })
+      }
