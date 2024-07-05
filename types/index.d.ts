@@ -7,23 +7,13 @@
 ///<reference path='./TransactionsResource.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
+import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "../src/utils";
 import { KeyObject } from "crypto";
 import { RequestData } from "../src/Types";
-import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "../src/utils";
 
 declare module 'narvi' {
   // Added to in other modules, referenced above.
   export namespace Narvi {
-    function getNarviRequestSignature(params: SignRequestParams): string;
-    function getNarviRequestHeaders(params: GetNarviRequestHeadersParams): Record<string, string>;
-    function getNarviRequestSignaturePayload(params: GetNarviSignaturePayloadParams): {
-      privateKey: KeyObject;
-      url: string;
-      method: string;
-      timestamp: string;
-      queryParams?: RequestData;
-      payload?: RequestData;
-    };
   }
 
   export class Narvi {
@@ -40,10 +30,21 @@ declare module 'narvi' {
     /**
      * API Errors
      */
-    // errors: typeof Narvi.errors
+        // errors: typeof Narvi.errors
     getPaginationCursor: (url: string) => string
   }
 
 
   export default Narvi
 }
+
+export function getNarviRequestSignature(params: SignRequestParams): string;
+export function getNarviRequestHeaders(params: GetNarviRequestHeadersParams): Record<string, string>;
+export function getNarviRequestSignaturePayload(params: GetNarviSignaturePayloadParams): {
+  privateKey: KeyObject;
+  url: string;
+  method: string;
+  timestamp: string;
+  queryParams?: RequestData;
+  payload?: RequestData;
+};
