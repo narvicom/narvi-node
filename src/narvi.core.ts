@@ -2,10 +2,10 @@ import * as apiVersion from './api/apiVersion'
 import { RequestSender } from './api/requests/RequestSender'
 import {
   determineProcessUserAgentProperties,
-  validateInteger,
-  pascalToCamelCase,
-  loadPrivateKeyFromFile,
   getPaginationCursor,
+  loadPrivateKeyFromFile,
+  pascalToCamelCase,
+  validateInteger,
 } from './utils/utils'
 import * as resources from './api/resources/resources'
 import { NarviResource } from './api/resources/NarviResource'
@@ -61,11 +61,11 @@ const ALLOWED_CONFIG_PROPERTIES = [
 type RequestSenderFactory = (narvi: NarviObject) => RequestSender
 
 const defaultRequestSenderFactory: RequestSenderFactory = (narvi) =>
-  new RequestSender(narvi)
+    new RequestSender(narvi)
 
 export function createNarvi(
-  platformFunctions: PlatformFunctions,
-  requestSender: RequestSenderFactory = defaultRequestSenderFactory,
+    platformFunctions: PlatformFunctions,
+    requestSender: RequestSenderFactory = defaultRequestSenderFactory,
 ): typeof Narvi {
   Narvi.PACKAGE_VERSION = version
   Narvi.USER_AGENT = {
@@ -95,12 +95,12 @@ export function createNarvi(
     this.VERSION = Narvi.PACKAGE_VERSION
 
     if (
-      props.protocol &&
-      props.protocol !== 'https' &&
-      (!props.host || /\.narvi\.com$/.test(props.host))
+        props.protocol &&
+        props.protocol !== 'https' &&
+        (!props.host || /\.narvi\.com$/.test(props.host))
     ) {
       throw new Error(
-        'The `https` protocol must be used when sending requests to `*.narvi.com`',
+          'The `https` protocol must be used when sending requests to `*.narvi.com`',
       )
     }
 
@@ -117,16 +117,16 @@ export function createNarvi(
       privateKey: loadPrivateKeyFromFile(props.privateKeyFilePath),
       timeout: validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
       maxNetworkRetries: validateInteger(
-        'maxNetworkRetries',
-        props.maxNetworkRetries,
-        1,
+          'maxNetworkRetries',
+          props.maxNetworkRetries,
+          1,
       ),
       agent: agent,
       httpClient:
-        props.httpClient ||
-        (agent
-          ? this._platformFunctions.createNodeHttpClient(agent)
-          : this._platformFunctions.createDefaultHttpClient()),
+          props.httpClient ||
+          (agent
+              ? this._platformFunctions.createNodeHttpClient(agent)
+              : this._platformFunctions.createDefaultHttpClient()),
       dev: false,
       narviAccount: props.narviAccount || null,
     }
@@ -158,7 +158,7 @@ export function createNarvi(
   Narvi.createFetchHttpClient = platformFunctions.createFetchHttpClient
   Narvi.createNodeCryptoProvider = platformFunctions.createNodeCryptoProvider
   Narvi.createSubtleCryptoProvider =
-    platformFunctions.createSubtleCryptoProvider
+      platformFunctions.createSubtleCryptoProvider
   Narvi.getPaginationCursor = getPaginationCursor
 
   /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
@@ -185,8 +185,8 @@ export function createNarvi(
      * This may be removed in the future.
      */
     _setApiField<K extends keyof NarviObject['_api']>(
-      key: K,
-      value: NarviObject['_api'][K],
+        key: K,
+        value: NarviObject['_api'][K],
     ): void {
       this._api[key] = value
     },
@@ -235,8 +235,8 @@ export function createNarvi(
      * fetching a uname from the system.
      */
     getClientUserAgentSeeded(
-      seed: Record<string, string | boolean | null>,
-      cb: (userAgent: string) => void,
+        seed: Record<string, string | boolean | null>,
+        cb: (userAgent: string) => void,
     ): void {
       this._platformFunctions.getUname().then((uname: string | null) => {
         const userAgent: Record<string, string> = {}
@@ -257,7 +257,7 @@ export function createNarvi(
     },
 
     getApiField<K extends keyof NarviObject['_api']>(
-      key: K,
+        key: K,
     ): NarviObject['_api'][K] {
       return this._api[key]
     },
@@ -297,14 +297,14 @@ export function createNarvi(
 
       // If config is an object, we assume the new behavior and make sure it doesn't contain any unexpected values
       const values = Object.keys(config).filter(
-        (value) => !ALLOWED_CONFIG_PROPERTIES.includes(value),
+          (value) => !ALLOWED_CONFIG_PROPERTIES.includes(value),
       )
 
       if (values.length > 0) {
         throw new Error(
-          `Config object may only contain the following: ${ALLOWED_CONFIG_PROPERTIES.join(
-            ', ',
-          )}`,
+            `Config object may only contain the following: ${ALLOWED_CONFIG_PROPERTIES.join(
+                ', ',
+            )}`,
         )
       }
 
@@ -314,3 +314,9 @@ export function createNarvi(
 
   return Narvi
 }
+
+export {
+  getNarviRequestHeaders,
+  getNarviRequestSignaturePayload,
+  getNarviRequestSignature
+} from './utils'

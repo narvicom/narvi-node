@@ -13,8 +13,7 @@ import { RequestData } from "../src/Types";
 
 declare module 'narvi' {
   // Added to in other modules, referenced above.
-  export namespace Narvi {
-  }
+  export namespace Narvi {}
 
   export class Narvi {
     static Narvi: typeof Narvi
