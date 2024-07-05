@@ -423,7 +423,7 @@ export function loadPrivateKeyFromFile(privateKeyFilePath: string) {
   return privateKey
 }
 
-interface SignRequestParams {
+export interface SignRequestParams {
   privateKey: crypto.KeyObject
   url: string
   method: string
@@ -461,7 +461,7 @@ export function getNarviRequestSignature(params: SignRequestParams) {
   return signatureString
 }
 
-interface GetNarviRequestHeadersParams {
+export interface GetNarviRequestHeadersParams {
   apiKeyId: string
   timestamp: string
   signature: string
@@ -478,7 +478,7 @@ export const getNarviRequestHeaders = (params: GetNarviRequestHeadersParams) => 
   })
 }
 
-      interface GetNarviSignaturePayloadParams {
+      export interface GetNarviSignaturePayloadParams {
         privateKey: KeyObject
         url: string
         method: string
