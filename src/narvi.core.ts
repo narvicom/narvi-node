@@ -3,6 +3,9 @@ import { RequestSender } from './api/requests/RequestSender'
 import {
   determineProcessUserAgentProperties,
   getPaginationCursor,
+    getNarviRequestSignaturePayload,
+    getNarviRequestSignature,
+    getNarviRequestHeaders,
   loadPrivateKeyFromFile,
   pascalToCamelCase,
   validateInteger,
@@ -160,6 +163,9 @@ export function createNarvi(
   Narvi.createSubtleCryptoProvider =
       platformFunctions.createSubtleCryptoProvider
   Narvi.getPaginationCursor = getPaginationCursor
+  Narvi.getNarviRequestHeaders = getNarviRequestHeaders
+  Narvi.getNarviRequestSignature = getNarviRequestSignature
+  Narvi.getNarviRequestSignaturePayload = getNarviRequestSignaturePayload
 
   /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
   // @ts-ignore
