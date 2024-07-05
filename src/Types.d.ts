@@ -6,6 +6,8 @@ import {
   HttpClientInterface,
   HttpClientResponseInterface,
 } from './http/HttpClient'
+import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "narvi";
+import { KeyObject } from "crypto";
 
 export type AppInfo = {
   name?: string
@@ -154,6 +156,16 @@ export type NarviObject = {
   getMaxNetworkRetryDelay: () => number
   getMaxNetworkRetries: () => number
   getPaginationCursor: (url: string) => number
+  getNarviRequestSignature: (params: SignRequestParams)=> string
+getNarviRequestHeaders: (params: GetNarviRequestHeadersParams)=> Record<string, string>
+getNarviRequestSignaturePayload: (params: GetNarviSignaturePayloadParams)=> {
+  privateKey: KeyObject;
+  url: string;
+  method: string;
+  timestamp: string;
+  queryParams?: RequestData;
+  payload?: RequestData;
+}
   _requestSender: RequestSender
   _platformFunctions: PlatformFunctions
   _setApiField: <K extends keyof NarviObject['_api']>(

@@ -9,7 +9,7 @@ import {
 } from '../Types'
 import * as fs from 'fs'
 import * as crypto from 'crypto'
-import { KeyObject } from "crypto";
+import { KeyObject } from 'crypto'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jsonStringify = require('json-stable-stringify')
@@ -478,31 +478,31 @@ export const getNarviRequestHeaders = (params: GetNarviRequestHeadersParams) => 
   })
 }
 
-      export interface GetNarviSignaturePayloadParams {
-        privateKey: KeyObject
-        url: string
-        method: string
-        timestamp: string
-        queryParams?: RequestData
-        payload?: RequestData
-      }
+export interface GetNarviSignaturePayloadParams {
+  privateKey: KeyObject
+  url: string
+  method: string
+  timestamp: string
+  queryParams?: RequestData
+  payload?: RequestData
+}
 
-      export const getNarviRequestSignaturePayload = (params: GetNarviSignaturePayloadParams) => {
-        const {
-          privateKey,
-          url,
-          method,
-          timestamp,
-          queryParams,
-          payload,
-        } = params
+export const getNarviRequestSignaturePayload = (params: GetNarviSignaturePayloadParams) => {
+  const {
+    privateKey,
+    url,
+    method,
+    timestamp,
+    queryParams,
+    payload,
+  } = params
 
-        return ({
-          privateKey,
-          url,
-          method,
-          timestamp,
-          queryParams,
-          payload: isEmpty(payload) ? undefined : payload
-        })
-      }
+  return ({
+    privateKey,
+    url,
+    method,
+    timestamp,
+    queryParams,
+    payload: isEmpty(payload) ? undefined : payload
+  })
+}

@@ -13,7 +13,8 @@ import { RequestData } from "../src/Types";
 
 declare module 'narvi' {
   // Added to in other modules, referenced above.
-  export namespace Narvi {}
+  export namespace Narvi {
+  }
 
   export class Narvi {
     static Narvi: typeof Narvi
@@ -31,19 +32,20 @@ declare module 'narvi' {
      */
         // errors: typeof Narvi.errors
     getPaginationCursor: (url: string) => string
+    getNarviRequestSignature: (params: SignRequestParams) => string
+    getNarviRequestHeaders: (params: GetNarviRequestHeadersParams) => Record<string, string>
+    getNarviRequestSignaturePayload: (params: GetNarviSignaturePayloadParams) => {
+      privateKey: KeyObject;
+      url: string;
+      method: string;
+      timestamp: string;
+      queryParams?: RequestData;
+      payload?: RequestData;
+    }
+
+
   }
 
 
   export default Narvi
 }
-
-export function getNarviRequestSignature(params: SignRequestParams): string;
-export function getNarviRequestHeaders(params: GetNarviRequestHeadersParams): Record<string, string>;
-export function getNarviRequestSignaturePayload(params: GetNarviSignaturePayloadParams): {
-  privateKey: KeyObject;
-  url: string;
-  method: string;
-  timestamp: string;
-  queryParams?: RequestData;
-  payload?: RequestData;
-};
