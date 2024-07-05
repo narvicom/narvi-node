@@ -6,7 +6,7 @@ import {
   HttpClientInterface,
   HttpClientResponseInterface,
 } from './http/HttpClient'
-import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "narvi";
+import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "../src/utils";
 import { KeyObject } from "crypto";
 
 export type AppInfo = {
