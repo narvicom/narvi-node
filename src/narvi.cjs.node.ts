@@ -13,6 +13,3 @@ module.exports.Narvi = Narvi
 // We may also want to add `Object.defineProperty(exports, "__esModule", {value: true});` in the future, so that Babel users will use the `default` version.
 module.exports.default = Narvi
 
-module.exports.getNarviRequestHeaders = getNarviRequestHeaders
-module.exports.getNarviRequestSignature = getNarviRequestSignature
-module.exports.getNarviRequestSignaturePayload = getNarviRequestSignaturePayload

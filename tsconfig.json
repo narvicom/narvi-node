@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     "noEmit": true,
     "types": [
       "node",
