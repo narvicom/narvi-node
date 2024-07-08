@@ -2,12 +2,9 @@
 import { EventEmitter } from 'events'
 import { PlatformFunctions } from './platform/PlatformFunctions'
 import * as crypto from 'crypto'
-import {
-  HttpClientInterface,
-  HttpClientResponseInterface,
-} from './http/HttpClient'
-import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "../src/utils";
-import { KeyObject } from "crypto";
+import { KeyObject } from 'crypto'
+import { HttpClientInterface, HttpClientResponseInterface, } from './http/HttpClient'
+import { GetNarviRequestHeadersParams, GetNarviSignaturePayloadParams, SignRequestParams } from "./utils/utils";
 
 export type AppInfo = {
   name?: string
@@ -29,10 +26,10 @@ export type MethodSpec = {
   fullPath?: string
   encode?: (data: RequestData) => RequestData
   validator?: (
-    data: RequestData,
-    options: {
-      headers: RequestHeaders
-    },
+      data: RequestData,
+      options: {
+        headers: RequestHeaders
+      },
   ) => void
   headers?: Record<string, string>
   streaming?: boolean
@@ -43,20 +40,20 @@ export type MethodSpec = {
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile
 
 export type RawErrorType =
-  | 'card_error'
-  | 'invalid_request_error'
-  | 'api_error'
-  | 'idempotency_error'
-  | 'rate_limit_error'
-  | 'authentication_error'
-  | 'invalid_grant'
+    | 'card_error'
+    | 'invalid_request_error'
+    | 'api_error'
+    | 'idempotency_error'
+    | 'rate_limit_error'
+    | 'authentication_error'
+    | 'invalid_grant'
 
 export type RequestArgs = Array<any>
 
 export type RequestCallback = (
-  this: void,
-  error: Error | null,
-  response?: any,
+    this: void,
+    error: Error | null,
+    response?: any,
 ) => RequestCallbackReturn
 
 export type RequestCallbackReturn = any
@@ -124,8 +121,8 @@ export type StreamingFile = {
 
 export type NarviObject = {
   getClientUserAgentSeeded: (
-    seed: Record<string, string | boolean | null>,
-    callback: (userAgent: string) => void,
+      seed: Record<string, string | boolean | null>,
+      callback: (userAgent: string) => void,
   ) => void
   VERSION: string
   getConstant: <T = string>(name: string) => T
@@ -148,7 +145,7 @@ export type NarviObject = {
     privateKey: crypto.KeyObject
   }
   getApiField: <K extends keyof NarviObject['_api']>(
-    key: K,
+      key: K,
   ) => NarviObject['_api'][K]
   _getPropsFromConfig: (config: UserProvidedConfig) => UserProvidedConfig
   getClientUserAgent: (callback: (clientUserAgent: string) => void) => void
@@ -156,42 +153,42 @@ export type NarviObject = {
   getMaxNetworkRetryDelay: () => number
   getMaxNetworkRetries: () => number
   getPaginationCursor: (url: string) => number
-  getNarviRequestSignature: (params: SignRequestParams)=> string
-getNarviRequestHeaders: (params: GetNarviRequestHeadersParams)=> Record<string, string>
-getNarviRequestSignaturePayload: (params: GetNarviSignaturePayloadParams)=> {
-  privateKey: KeyObject;
-  url: string;
-  method: string;
-  timestamp: string;
-  queryParams?: RequestData;
-  payload?: RequestData;
-}
+  getNarviRequestSignature: (params: SignRequestParams) => string
+  getNarviRequestHeaders: (params: GetNarviRequestHeadersParams) => Record<string, string>
+  getNarviRequestSignaturePayload: (params: GetNarviSignaturePayloadParams) => {
+    privateKey: KeyObject;
+    url: string;
+    method: string;
+    timestamp: string;
+    queryParams?: RequestData;
+    payload?: RequestData;
+  }
   _requestSender: RequestSender
   _platformFunctions: PlatformFunctions
   _setApiField: <K extends keyof NarviObject['_api']>(
-    name: K,
-    value: NarviObject['_api'][K],
+      name: K,
+      value: NarviObject['_api'][K],
   ) => void
   NarviResource: NarviResourceConstructor
   errors: any
 }
 
 export type NarviConstructor = {
-  new (config: UserProvidedConfig): NarviObject
+  new(config: UserProvidedConfig): NarviObject
 }
 
 declare const Narvi: NarviConstructor
 
 export type RequestSender = {
   _request(
-    method: string,
-    host: string | null,
-    path: string,
-    data: RequestData,
-    auth: string | null,
-    options: RequestOptions,
-    callback: RequestCallback,
-    requestDataProcessor: RequestDataProcessor | undefined,
+      method: string,
+      host: string | null,
+      path: string,
+      data: RequestData,
+      auth: string | null,
+      options: RequestOptions,
+      callback: RequestCallback,
+      requestDataProcessor: RequestDataProcessor | undefined,
   ): void
 }
 
@@ -218,7 +215,7 @@ export type NarviRawError = {
 }
 
 export type NarviResourceConstructor = {
-  new (narvi: NarviObject, deprecatedUrlData?: never): NarviResourceObject
+  new(narvi: NarviObject, deprecatedUrlData?: never): NarviResourceObject
 }
 
 export type NarviResourceObject = {
@@ -228,29 +225,29 @@ export type NarviResourceObject = {
   resourcePath: string
   createResourcePathWithSymbols: (path: string | null | undefined) => string
   createFullPath: (
-    interpolator: UrlInterpolator,
-    urlData: RequestData,
+      interpolator: UrlInterpolator,
+      urlData: RequestData,
   ) => string
   initialize: (...args: Array<any>) => void
   _joinUrlParts: (urlParts: string[]) => string
   requestDataProcessor: null | RequestDataProcessor
   _makeRequest(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData,
+      requestArgs: RequestArgs,
+      spec: MethodSpec,
+      overrideData: RequestData,
   ): Promise<any>
   _getRequestOpts(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData,
+      requestArgs: RequestArgs,
+      spec: MethodSpec,
+      overrideData: RequestData,
   ): RequestOpts
 }
 
 export type RequestDataProcessor = (
-  method: string,
-  data: RequestData,
-  headers: RequestHeaders | undefined,
-  prepareAndMakeRequest: (error: Error | null, data: string) => void,
+    method: string,
+    data: RequestData,
+    headers: RequestHeaders | undefined,
+    prepareAndMakeRequest: (error: Error | null, data: string) => void,
 ) => void
 
 export type UrlInterpolator = (params: Record<string, unknown>) => string
