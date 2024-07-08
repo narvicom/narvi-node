@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
-    "moduleResolution": "node",
     "outDir": "./esm",
     "module": "es2022"
   },

@@ -1,11 +1,7 @@
 {
   "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
-    "moduleResolution": "node",
     "noEmit": true,
-   "paths": {
-      "narvi": ["./src/utils"]
-    },
     "types": [
       "node",
       "mocha"

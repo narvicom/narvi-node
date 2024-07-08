@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
     "outDir": "./cjs",
     "module": "commonjs",
     "target": "es2017",
