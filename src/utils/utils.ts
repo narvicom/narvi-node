@@ -467,7 +467,7 @@ export interface GetNarviRequestHeadersParams {
   signature: string
 }
 
-export const getNarviRequestHeaders = (params: GetNarviRequestHeadersParams) => {
+export function getNarviRequestHeaders(params: GetNarviRequestHeadersParams) {
   const { apiKeyId, timestamp, signature } = params
 
   return ({
@@ -487,7 +487,7 @@ export interface GetNarviSignaturePayloadParams {
   payload?: RequestData
 }
 
-export const getNarviRequestSignaturePayload = (params: GetNarviSignaturePayloadParams) => {
+export function getNarviRequestSignaturePayload (params: GetNarviSignaturePayloadParams) {
   const {
     privateKey,
     url,
