@@ -5,6 +5,7 @@ const utils_1 = require("../../utils/utils");
 const NarviMethod_1 = require("../requests/NarviMethod");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const isEmpty = require('lodash.isempty');
+const { v4: uuidv4 } = require('uuid');
 // Provide extension mechanism for Narvi Resource Sub-Classes
 NarviResource.extend = utils_1.protoExtend;
 // Expose method-creator
@@ -174,7 +175,7 @@ NarviResource.prototype = {
                 (0, utils_1.stringifyRequestData)(opts.queryData, methodHasPayload),
             ].join('');
             const { headers, settings } = opts;
-            const timestamp = String(new Date().getTime());
+            const requestID = uuidv4();
             const url = [
                 this._narvi.getApiField('protocol'),
                 '://',
@@ -185,12 +186,12 @@ NarviResource.prototype = {
                 privateKey: this._narvi.getApiField('privateKey'),
                 url,
                 method: opts.requestMethod,
-                timestamp,
+                requestID,
                 queryParams: opts.queryData,
                 payload: isEmpty(opts.bodyData) ? undefined : opts.bodyData,
             };
             const signature = (0, utils_1.getNarviRequestSignature)(signaturePayload);
-            const addNarviHeaders = (headers) => (Object.assign(Object.assign({}, headers), { 'API-KEY-ID': this._narvi.getApiField('apiKeyId'), 'API-REQUEST-TIMESTAMP': timestamp, 'API-REQUEST-SIGNATURE': signature, 
+            const addNarviHeaders = (headers) => (Object.assign(Object.assign({}, headers), { 'API-KEY-ID': this._narvi.getApiField('apiKeyId'), 'API-REQUEST-ID': requestID, 'API-REQUEST-SIGNATURE': signature, 
                 // 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Type': 'application/json' }));
             this._narvi._requestSender._request(opts.requestMethod, opts.host, path, opts.bodyData, opts.auth, {

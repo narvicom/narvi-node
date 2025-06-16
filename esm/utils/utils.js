@@ -317,8 +317,8 @@ export function loadPrivateKeyFromFile(privateKeyFilePath) {
     return privateKey;
 }
 export function getNarviRequestSignature(params) {
-    const { privateKey, url, method, timestamp, queryParams, payload } = params;
-    const hash_elems = [getPathFromUrl(url), method, timestamp];
+    const { privateKey, url, method, requestID, queryParams, payload } = params;
+    const hash_elems = [getPathFromUrl(url), method, requestID];
     if (!isEmpty(queryParams) && queryParams) {
         const queryParamsCanonical = jsonStringify(queryParams);
         hash_elems.push(queryParamsCanonical);
@@ -328,8 +328,6 @@ export function getNarviRequestSignature(params) {
         hash_elems.push(payloadCanonical);
     }
     const dataToHash = hash_elems.join('');
-    // const dataToHash =
-    //   'https://api.narvi.com/rest/v1.0/transactions/createPOST1693488172942{"account_pid":"RPUEWWNVLN04JE45","amount":1,"currency":"EUR","recipient":{"bic":"ALBPPLPWXXX","country":"PL","name":"Uncle","number":"PL61109010140000071219812874"},"remittance_information":{"ustrd":"test transfer"}}'
     const hash = crypto.createHash('sha256').update(dataToHash).digest();
     const hashHax = crypto.createHash('sha256').update(dataToHash).digest('hex');
     const signature = crypto.sign('sha256', hash, privateKey);
