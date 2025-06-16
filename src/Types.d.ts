@@ -175,6 +175,17 @@ export type NarviObject = {
 
 export type NarviConstructor = {
   new(config: UserProvidedConfig): NarviObject
+  getPaginationCursor: (url: string) => number
+  getNarviRequestSignature: (params: SignRequestParams) => string
+  getNarviRequestHeaders: (params: GetNarviRequestHeadersParams) => Record<string, string>
+  getNarviRequestSignaturePayload: (params: GetNarviSignaturePayloadParams) => {
+    privateKey: KeyObject;
+    url: string;
+    method: string;
+    requestID: string;
+    queryParams?: RequestData;
+    payload?: RequestData;
+  }
 }
 
 declare const Narvi: NarviConstructor
