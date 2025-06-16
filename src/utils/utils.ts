@@ -427,15 +427,15 @@ export interface SignRequestParams {
   privateKey: crypto.KeyObject
   url: string
   method: string
-  timestamp: string
+  requestID: string
   queryParams?: any
   payload?: any
 }
 
 export function getNarviRequestSignature(params: SignRequestParams) {
-  const { privateKey, url, method, timestamp, queryParams, payload } = params
+  const { privateKey, url, method, requestID, queryParams, payload } = params
 
-  const hash_elems = [getPathFromUrl(url), method, timestamp]
+  const hash_elems = [getPathFromUrl(url), method, requestID]
 
   if (!isEmpty(queryParams) && queryParams) {
     const queryParamsCanonical = jsonStringify(queryParams)
@@ -463,16 +463,16 @@ export function getNarviRequestSignature(params: SignRequestParams) {
 
 export interface GetNarviRequestHeadersParams {
   apiKeyId: string
-  timestamp: string
+  requestID: string
   signature: string
 }
 
 export function getNarviRequestHeaders(params: GetNarviRequestHeadersParams) {
-  const { apiKeyId, timestamp, signature } = params
+  const { apiKeyId, requestID, signature } = params
 
   return ({
     'API-KEY-ID': apiKeyId,
-    'API-REQUEST-TIMESTAMP': timestamp,
+    'API-REQUEST-ID': requestID,
     'API-REQUEST-SIGNATURE': signature,
     'Content-Type': 'application/json',
   })
@@ -482,7 +482,7 @@ export interface GetNarviSignaturePayloadParams {
   privateKey: KeyObject
   url: string
   method: string
-  timestamp: string
+  requestID: string
   queryParams?: RequestData
   payload?: RequestData
 }
@@ -492,7 +492,7 @@ export function getNarviRequestSignaturePayload (params: GetNarviSignaturePayloa
     privateKey,
     url,
     method,
-    timestamp,
+    requestID,
     queryParams,
     payload,
   } = params
@@ -501,7 +501,7 @@ export function getNarviRequestSignaturePayload (params: GetNarviSignaturePayloa
     privateKey,
     url,
     method,
-    timestamp,
+    requestID,
     queryParams,
     payload: isEmpty(payload) ? undefined : payload
   })

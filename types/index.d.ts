@@ -38,7 +38,7 @@ declare module 'narvi' {
       privateKey: KeyObject;
       url: string;
       method: string;
-      timestamp: string;
+      requestID: string;
       queryParams?: RequestData;
       payload?: RequestData;
     }

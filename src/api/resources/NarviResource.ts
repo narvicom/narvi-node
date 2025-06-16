@@ -248,7 +248,7 @@ NarviResource.prototype = {
 
       const { headers, settings } = opts
 
-      const timestamp = String(new Date().getTime())
+      const requestID = this._narvi._platformFunctions.uuid4()
 
       const url = [
         this._narvi.getApiField('protocol'),
@@ -261,7 +261,7 @@ NarviResource.prototype = {
         privateKey: this._narvi.getApiField('privateKey'),
         url,
         method: opts.requestMethod,
-        timestamp,
+        requestID,
         queryParams: opts.queryData,
         payload: isEmpty(opts.bodyData) ? undefined : opts.bodyData,
       })
@@ -272,7 +272,7 @@ NarviResource.prototype = {
         ...headers,
         ...getNarviRequestHeaders({
           apiKeyId: this._narvi.getApiField('apiKeyId'),
-          timestamp,
+          requestID,
           signature
         })
       })
