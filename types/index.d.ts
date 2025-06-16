@@ -53,10 +53,10 @@ declare module 'narvi' {
      * API Errors
      */
         // errors: typeof Narvi.errors
-    getPaginationCursor: (url: string) => string
-    getNarviRequestSignature: (params: Narvi.SignRequestParams) => string
-    getNarviRequestHeaders: (params: Narvi.GetNarviRequestHeadersParams) => Record<string, string>
-    getNarviRequestSignaturePayload: (params: Narvi.GetNarviSignaturePayloadParams) => {
+    static getPaginationCursor: (url: string) => string
+    static getNarviRequestSignature: (params: Narvi.SignRequestParams) => string
+    static getNarviRequestHeaders: (params: Narvi.GetNarviRequestHeadersParams) => Record<string, string>
+    static getNarviRequestSignaturePayload: (params: Narvi.GetNarviSignaturePayloadParams) => {
       privateKey: KeyObject;
       url: string;
       method: string;
