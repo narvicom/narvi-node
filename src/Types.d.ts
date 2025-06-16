@@ -6,29 +6,33 @@ import { KeyObject } from 'crypto';
 import { HttpClientInterface, HttpClientResponseInterface } from './http/HttpClient';
 import { CryptoProvider } from './crypto/CryptoProvider';
 
+// --- Parameter Types for Static Methods ---
+
 export interface GetNarviRequestHeadersParams {
-  url: string;
-  method: string;
+  apiKeyId: string;
   requestID: string;
-  queryParams?: Record<string, string>;
-  payload?: Record<string, any>;
+  signature: string;
 }
 
 export interface SignRequestParams {
+  privateKey: KeyObject;
   url: string;
   method: string;
   requestID: string;
-  queryParams?: Record<string, string>;
-  payload?: Record<string, any>;
+  queryParams?: any;
+  payload?: any;
 }
 
 export interface GetNarviSignaturePayloadParams {
+  privateKey: KeyObject;
   url: string;
   method: string;
   requestID: string;
-  queryParams?: Record<string, string>;
-  payload?: Record<string, any>;
+  queryParams?: any;
+  payload?: any;
 }
+
+// --- Main Types ---
 
 export type AppInfo = {
   name?: string;
@@ -187,19 +191,18 @@ export type NarviObject = {
 
 export type NarviConstructor = {
   new(config: UserProvidedConfig): NarviObject;
-  
+
   // Static properties
   PACKAGE_VERSION: string;
   USER_AGENT: Record<string, string | boolean | null>;
   errors: any;
-  
+
   // Static methods
   createNodeHttpClient: (agent: any) => HttpClientInterface;
   createFetchHttpClient: () => HttpClientInterface;
   createNodeCryptoProvider: () => CryptoProvider;
   createSubtleCryptoProvider: () => CryptoProvider;
-  
-  // Utility methods
+
   getPaginationCursor: (url: string) => string;
   getNarviRequestHeaders: (params: GetNarviRequestHeadersParams) => Record<string, string>;
   getNarviRequestSignature: (params: SignRequestParams) => string;
@@ -208,12 +211,14 @@ export type NarviConstructor = {
     url: string;
     method: string;
     requestID: string;
-    queryParams?: Record<string, string>;
-    payload?: Record<string, any>;
+    queryParams?: any;
+    payload?: any;
   };
 };
 
 declare const Narvi: NarviConstructor;
+export default Narvi;
+
 
 export type RequestSender = {
   _request(
