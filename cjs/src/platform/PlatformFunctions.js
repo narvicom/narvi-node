@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlatformFunctions = exports.uuid4 = void 0;
+exports.PlatformFunctions = void 0;
+exports.uuid4 = uuid4;
 const FetchHttpClient_1 = require("../http/FetchHttpClient");
 const SubtleCryptoProvider_1 = require("../crypto/SubtleCryptoProvider");
 function uuid4() {
@@ -10,7 +11,6 @@ function uuid4() {
         return v.toString(16);
     });
 }
-exports.uuid4 = uuid4;
 /**
  * Interface encapsulating various utility functions whose
  * implementations depend on the platform / JS runtime.

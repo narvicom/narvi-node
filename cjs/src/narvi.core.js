@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNarvi = void 0;
+exports.createNarvi = createNarvi;
 const apiVersion = require("./api/apiVersion");
 const RequestSender_1 = require("./api/requests/RequestSender");
 const utils_1 = require("./utils/utils");
@@ -221,4 +221,3 @@ function createNarvi(platformFunctions, requestSender = defaultRequestSenderFact
     };
     return Narvi;
 }
-exports.createNarvi = createNarvi;

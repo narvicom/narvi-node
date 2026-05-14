@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NarviResource = void 0;
+exports.NarviResource = NarviResource;
 const utils_1 = require("../../utils/utils");
 const NarviMethod_1 = require("../requests/NarviMethod");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -31,7 +31,6 @@ function NarviResource(narvi, deprecatedUrlData) {
     // eslint-disable-next-line prefer-rest-params
     this.initialize(...arguments);
 }
-exports.NarviResource = NarviResource;
 NarviResource.prototype = {
     _narvi: null,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

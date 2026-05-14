@@ -148,9 +148,7 @@ export class NodePlatformFunctions extends PlatformFunctions {
   /**
    * Creates a CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
    */
-  createSubtleCryptoProvider(
-    subtleCrypto?: typeof crypto.subtle,
-  ): CryptoProvider {
+  createSubtleCryptoProvider(subtleCrypto?: SubtleCrypto): CryptoProvider {
     return new SubtleCryptoProvider(subtleCrypto)
   }
 
