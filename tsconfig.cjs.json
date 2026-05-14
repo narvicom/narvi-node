@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./cjs",
+    "rootDir": "./src",
     "module": "commonjs",
     "target": "es2017",
     "checkJs": false,

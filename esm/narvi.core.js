@@ -1,12 +1,12 @@
 import * as apiVersion from './api/apiVersion';
 import { RequestSender } from './api/requests/RequestSender';
-import { determineProcessUserAgentProperties, validateInteger, pascalToCamelCase, loadPrivateKeyFromFile, getPaginationCursor, } from './utils/utils';
+import { determineProcessUserAgentProperties, getPaginationCursor, getNarviRequestSignaturePayload, getNarviRequestSignature, getNarviRequestHeaders, loadPrivateKeyFromFile, pascalToCamelCase, validateInteger, } from './utils/utils';
 import * as resources from './api/resources/resources';
 import { NarviResource } from './api/resources/NarviResource';
 import { HttpClient, HttpClientResponse } from './http/HttpClient';
 import * as _Error from './errors/Errors';
 import { CryptoProvider } from './crypto/CryptoProvider';
-import { version } from './version.js'
+import { version } from "./version";
 const DEFAULT_HOST = 'api.narvi.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
@@ -95,6 +95,9 @@ export function createNarvi(platformFunctions, requestSender = defaultRequestSen
     Narvi.createSubtleCryptoProvider =
         platformFunctions.createSubtleCryptoProvider;
     Narvi.getPaginationCursor = getPaginationCursor;
+    Narvi.getNarviRequestHeaders = getNarviRequestHeaders;
+    Narvi.getNarviRequestSignature = getNarviRequestSignature;
+    Narvi.getNarviRequestSignaturePayload = getNarviRequestSignaturePayload;
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     Narvi.prototype = {

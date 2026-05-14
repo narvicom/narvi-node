@@ -218,7 +218,7 @@ class RequestSender {
             // }
             defaultHeaders['Content-Length'] = contentLength;
         }
-        return Object.assign((0, utils_1.removeNullish)(defaultHeaders),
+        return Object.assign((0, utils_1.removeNullish)(defaultHeaders), 
         // If the user supplied, say 'idempotency-key', override instead of appending by ensuring caps are the same.
         (0, utils_1.normalizeHeaders)(userSuppliedHeaders));
     }
@@ -244,7 +244,7 @@ class RequestSender {
         }
         return sleepSeconds * 1000;
     }
-    _request(method, host, path, data, auth,
+    _request(method, host, path, data, auth, 
     // eslint-disable-next-line default-param-last
     options = {}, callback, requestDataProcessor = null) {
         let requestData;
@@ -278,7 +278,7 @@ class RequestSender {
             req
                 .then((res) => {
                 if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
-                    return retryRequest(makeRequest, apiVersion, headers, requestRetries,
+                    return retryRequest(makeRequest, apiVersion, headers, requestRetries, 
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     res.getHeaders()['retry-after']);

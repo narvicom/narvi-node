@@ -1,8 +1,7 @@
-import { getDataFromArgs, getOptionsFromArgs, makeURLInterpolator, protoExtend, getNarviRequestSignature, stringifyRequestData, } from '../../utils/utils';
+import { getDataFromArgs, getNarviRequestHeaders, getOptionsFromArgs, getNarviRequestSignaturePayload, makeURLInterpolator, protoExtend, getNarviRequestSignature, stringifyRequestData, } from '../../utils/utils';
 import { narviMethod } from '../requests/NarviMethod';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const isEmpty = require('lodash.isempty');
-import { v4 as uuidv4 } from 'uuid';
 // Provide extension mechanism for Narvi Resource Sub-Classes
 NarviResource.extend = protoExtend;
 // Expose method-creator
@@ -38,7 +37,8 @@ NarviResource.prototype = {
     // Methods that don't use the API's default '/v1' path can override it with this setting.
     basePath: null,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    initialize() { },
+    initialize() {
+    },
     // Function to override the default data processor. This allows full control
     // over how a NarviResource's request data will get converted into an HTTP
     // body. This is useful for non-standard HTTP requests. The function should
@@ -171,25 +171,27 @@ NarviResource.prototype = {
                 stringifyRequestData(opts.queryData, methodHasPayload),
             ].join('');
             const { headers, settings } = opts;
-            const requestID = uuidv4();
+            const requestID = this._narvi._platformFunctions.uuid4();
             const url = [
                 this._narvi.getApiField('protocol'),
                 '://',
                 this._narvi.getApiField('host'),
                 path,
             ].join('');
-            const signaturePayload = {
+            const signaturePayload = getNarviRequestSignaturePayload({
                 privateKey: this._narvi.getApiField('privateKey'),
                 url,
                 method: opts.requestMethod,
                 requestID,
                 queryParams: opts.queryData,
                 payload: isEmpty(opts.bodyData) ? undefined : opts.bodyData,
-            };
+            });
             const signature = getNarviRequestSignature(signaturePayload);
-            const addNarviHeaders = (headers) => (Object.assign(Object.assign({}, headers), { 'API-KEY-ID': this._narvi.getApiField('apiKeyId'), 'API-REQUEST-ID': requestID, 'API-REQUEST-SIGNATURE': signature, 
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Type': 'application/json' }));
+            const addNarviHeaders = (headers) => (Object.assign(Object.assign({}, headers), getNarviRequestHeaders({
+                apiKeyId: this._narvi.getApiField('apiKeyId'),
+                requestID,
+                signature
+            })));
             this._narvi._requestSender._request(opts.requestMethod, opts.host, path, opts.bodyData, opts.auth, {
                 headers: addNarviHeaders(headers),
                 settings,

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNarvi = void 0;
+exports.createNarvi = createNarvi;
 const apiVersion = require("./api/apiVersion");
 const RequestSender_1 = require("./api/requests/RequestSender");
 const utils_1 = require("./utils/utils");
@@ -9,7 +9,7 @@ const NarviResource_1 = require("./api/resources/NarviResource");
 const HttpClient_1 = require("./http/HttpClient");
 const _Error = require("./errors/Errors");
 const CryptoProvider_1 = require("./crypto/CryptoProvider");
-const {version} = require('./version')
+const version_1 = require("./version");
 const DEFAULT_HOST = 'api.narvi.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
@@ -35,7 +35,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 ];
 const defaultRequestSenderFactory = (narvi) => new RequestSender_1.RequestSender(narvi);
 function createNarvi(platformFunctions, requestSender = defaultRequestSenderFactory) {
-    Narvi.PACKAGE_VERSION = version;
+    Narvi.PACKAGE_VERSION = version_1.version;
     Narvi.USER_AGENT = Object.assign({ bindings_version: Narvi.PACKAGE_VERSION, lang: 'node', publisher: 'narvi', uname: null, typescript: false }, (0, utils_1.determineProcessUserAgentProperties)());
     Narvi.NarviResource = NarviResource_1.NarviResource;
     Narvi.resources = resources;
@@ -98,6 +98,9 @@ function createNarvi(platformFunctions, requestSender = defaultRequestSenderFact
     Narvi.createSubtleCryptoProvider =
         platformFunctions.createSubtleCryptoProvider;
     Narvi.getPaginationCursor = utils_1.getPaginationCursor;
+    Narvi.getNarviRequestHeaders = utils_1.getNarviRequestHeaders;
+    Narvi.getNarviRequestSignature = utils_1.getNarviRequestSignature;
+    Narvi.getNarviRequestSignaturePayload = utils_1.getNarviRequestSignaturePayload;
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     Narvi.prototype = {
@@ -218,4 +221,3 @@ function createNarvi(platformFunctions, requestSender = defaultRequestSenderFact
     };
     return Narvi;
 }
-exports.createNarvi = createNarvi;

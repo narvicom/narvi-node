@@ -18,6 +18,8 @@ export class FetchHttpClient extends HttpClient {
         const methodHasPayload = method === 'POST' || method === 'PUT' || method === 'PATCH';
         const body = requestData || (methodHasPayload ? '' : undefined);
         const fetchFn = this._fetchFn || fetch;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const fetchPromise = fetchFn(url.toString(), {
             method,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

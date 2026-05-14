@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.narviMethod = void 0;
+exports.narviMethod = narviMethod;
 const utils_1 = require("../../utils/utils");
 /**
  * Create an API method from the declared spec.
@@ -31,4 +31,3 @@ function narviMethod(spec) {
         return requestPromise;
     };
 }
-exports.narviMethod = narviMethod;

@@ -18,7 +18,7 @@ import { PlatformFunctions } from './platform/PlatformFunctions'
 import { CryptoProvider } from './crypto/CryptoProvider'
 
 import { NarviObject } from './Types'
-import { version } from "../version";
+import { version } from "./version";
 
 export type UserProvidedConfig = {
   apiKeyId: string

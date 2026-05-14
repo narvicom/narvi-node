@@ -1,6 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNarviRequestSignature = exports.loadPrivateKeyFromFile = exports.getPaginationCursor = exports.getQueryFromUrl = exports.getPathFromUrl = exports.protoExtend = exports.concat = exports.determineProcessUserAgentProperties = exports.validateInteger = exports.flattenAndStringify = exports.isObject = exports.emitWarning = exports.pascalToCamelCase = exports.callbackifyPromiseWithTimeout = exports.normalizeHeader = exports.normalizeHeaders = exports.removeNullish = exports.getOptionsFromArgs = exports.getDataFromArgs = exports.extractUrlParams = exports.makeURLInterpolator = exports.stringifyRequestData = exports.isOptionsHash = void 0;
+exports.makeURLInterpolator = void 0;
+exports.isOptionsHash = isOptionsHash;
+exports.stringifyRequestData = stringifyRequestData;
+exports.extractUrlParams = extractUrlParams;
+exports.getDataFromArgs = getDataFromArgs;
+exports.getOptionsFromArgs = getOptionsFromArgs;
+exports.removeNullish = removeNullish;
+exports.normalizeHeaders = normalizeHeaders;
+exports.normalizeHeader = normalizeHeader;
+exports.callbackifyPromiseWithTimeout = callbackifyPromiseWithTimeout;
+exports.pascalToCamelCase = pascalToCamelCase;
+exports.emitWarning = emitWarning;
+exports.isObject = isObject;
+exports.flattenAndStringify = flattenAndStringify;
+exports.validateInteger = validateInteger;
+exports.determineProcessUserAgentProperties = determineProcessUserAgentProperties;
+exports.concat = concat;
+exports.protoExtend = protoExtend;
+exports.getPathFromUrl = getPathFromUrl;
+exports.getQueryFromUrl = getQueryFromUrl;
+exports.getPaginationCursor = getPaginationCursor;
+exports.loadPrivateKeyFromFile = loadPrivateKeyFromFile;
+exports.getNarviRequestSignature = getNarviRequestSignature;
+exports.getNarviRequestHeaders = getNarviRequestHeaders;
+exports.getNarviRequestSignaturePayload = getNarviRequestSignaturePayload;
 const qs = require("qs");
 const fs = require("fs");
 const crypto = require("crypto");
@@ -22,7 +46,6 @@ function isOptionsHash(o) {
         typeof o === 'object' &&
         OPTIONS_KEYS.some((prop) => Object.prototype.hasOwnProperty.call(o, prop)));
 }
-exports.isOptionsHash = isOptionsHash;
 /**
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
@@ -47,7 +70,6 @@ function stringifyRequestData(data, hasPayload) {
     // POST PUT PATCH Requests
     return jsonStringify(data);
 }
-exports.stringifyRequestData = stringifyRequestData;
 /**
  * Outputs a new function with interpolated object property values.
  * Use like so:
@@ -64,7 +86,7 @@ exports.makeURLInterpolator = (() => {
     return (str) => {
         const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
         return (outputs) => {
-            return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
+            return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) => 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             encodeURIComponent(outputs[$1] || ''));
@@ -78,7 +100,6 @@ function extractUrlParams(path) {
     }
     return params.map((param) => param.replace(/[{}]/g, ''));
 }
-exports.extractUrlParams = extractUrlParams;
 /**
  * Return the data argument from a list of arguments
  *
@@ -104,7 +125,6 @@ function getDataFromArgs(args) {
     }
     return {};
 }
-exports.getDataFromArgs = getDataFromArgs;
 /**
  * Return the options hash from a list of arguments
  */
@@ -151,7 +171,6 @@ function getOptionsFromArgs(args) {
     }
     return opts;
 }
-exports.getOptionsFromArgs = getOptionsFromArgs;
 /**
  * Remove empty values from an object
  */
@@ -166,7 +185,6 @@ function removeNullish(obj) {
         return result;
     }, {});
 }
-exports.removeNullish = removeNullish;
 /**
  * Normalize standard HTTP Headers:
  * {'foo-bar': 'hi'}
@@ -182,7 +200,6 @@ function normalizeHeaders(obj) {
         return result;
     }, {});
 }
-exports.normalizeHeaders = normalizeHeaders;
 /**
  * Stolen from https://github.com/marten-de-vries/header-case-normalizer/blob/master/index.js#L36-L41
  * without the exceptions which are irrelevant to us.
@@ -193,7 +210,6 @@ function normalizeHeader(header) {
         .map((text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase())
         .join('-');
 }
-exports.normalizeHeader = normalizeHeader;
 function callbackifyPromiseWithTimeout(promise, callback) {
     if (callback) {
         // Ensure callback is called outside of promise stack.
@@ -209,7 +225,6 @@ function callbackifyPromiseWithTimeout(promise, callback) {
     }
     return promise;
 }
-exports.callbackifyPromiseWithTimeout = callbackifyPromiseWithTimeout;
 /**
  * Allow for special capitalization cases (such as OAuth)
  */
@@ -221,19 +236,16 @@ function pascalToCamelCase(name) {
         return name[0].toLowerCase() + name.substring(1);
     }
 }
-exports.pascalToCamelCase = pascalToCamelCase;
 function emitWarning(warning) {
     if (typeof process.emitWarning !== 'function') {
         return console.warn(`Narvi: ${warning}`); /* eslint-disable-line no-console */
     }
     return process.emitWarning(warning, 'Narvi');
 }
-exports.emitWarning = emitWarning;
 function isObject(obj) {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
 }
-exports.isObject = isObject;
 // For use in multipart requests
 function flattenAndStringify(data) {
     const result = {};
@@ -263,7 +275,6 @@ function flattenAndStringify(data) {
     step(data, null);
     return result;
 }
-exports.flattenAndStringify = flattenAndStringify;
 function validateInteger(name, n, defaultVal) {
     if (!Number.isInteger(n)) {
         if (defaultVal !== undefined) {
@@ -275,7 +286,6 @@ function validateInteger(name, n, defaultVal) {
     }
     return n;
 }
-exports.validateInteger = validateInteger;
 function determineProcessUserAgentProperties() {
     return typeof process === 'undefined'
         ? {}
@@ -284,7 +294,6 @@ function determineProcessUserAgentProperties() {
             platform: process.platform,
         };
 }
-exports.determineProcessUserAgentProperties = determineProcessUserAgentProperties;
 /**
  * Joins an array of Uint8Arrays into a single Uint8Array
  */
@@ -298,7 +307,6 @@ function concat(arrays) {
     });
     return merged;
 }
-exports.concat = concat;
 function protoExtend(sub) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
@@ -314,24 +322,20 @@ function protoExtend(sub) {
     Object.assign(Constructor.prototype, sub);
     return Constructor;
 }
-exports.protoExtend = protoExtend;
 function getPathFromUrl(url) {
     var _a;
     // Removes query string if present
     return ((_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[0]) || '';
 }
-exports.getPathFromUrl = getPathFromUrl;
 function getQueryFromUrl(url) {
     var _a;
     // Removes path string
     return ((_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) || '';
 }
-exports.getQueryFromUrl = getQueryFromUrl;
 function getPaginationCursor(url) {
     const result = qs.parse(getQueryFromUrl(url));
     return ((result === null || result === void 0 ? void 0 : result.cursor) || '');
 }
-exports.getPaginationCursor = getPaginationCursor;
 function loadPrivateKeyFromFile(privateKeyFilePath) {
     const privatePem = fs.readFileSync(privateKeyFilePath);
     const privateKey = crypto.createPrivateKey({
@@ -339,7 +343,6 @@ function loadPrivateKeyFromFile(privateKeyFilePath) {
     });
     return privateKey;
 }
-exports.loadPrivateKeyFromFile = loadPrivateKeyFromFile;
 function getNarviRequestSignature(params) {
     const { privateKey, url, method, requestID, queryParams, payload } = params;
     const hash_elems = [getPathFromUrl(url), method, requestID];
@@ -352,10 +355,31 @@ function getNarviRequestSignature(params) {
         hash_elems.push(payloadCanonical);
     }
     const dataToHash = hash_elems.join('');
+    // const dataToHash =
+    //   'https://api.narvi.com/rest/v1.0/transactions/createPOST1693488172942{"account_pid":"RPUEWWNVLN04JE45","amount":1,"currency":"EUR","recipient":{"country":"PL","name":"Uncle","number":"PL61109010140000071219812874"},"remittance_information":{"ustrd":"test transfer"}}'
     const hash = crypto.createHash('sha256').update(dataToHash).digest();
     const hashHax = crypto.createHash('sha256').update(dataToHash).digest('hex');
     const signature = crypto.sign('sha256', hash, privateKey);
     const signatureString = signature.toString('base64');
     return signatureString;
 }
-exports.getNarviRequestSignature = getNarviRequestSignature;
+function getNarviRequestHeaders(params) {
+    const { apiKeyId, requestID, signature } = params;
+    return ({
+        'API-KEY-ID': apiKeyId,
+        'API-REQUEST-ID': requestID,
+        'API-REQUEST-SIGNATURE': signature,
+        'Content-Type': 'application/json',
+    });
+}
+function getNarviRequestSignaturePayload(params) {
+    const { privateKey, url, method, requestID, queryParams, payload, } = params;
+    return ({
+        privateKey,
+        url,
+        method,
+        requestID,
+        queryParams,
+        payload: isEmpty(payload) ? undefined : payload
+    });
+}

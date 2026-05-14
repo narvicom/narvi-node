@@ -4,7 +4,7 @@
   },
   "hooks": {
     "after:bump": [
-      "genversion --es6 ./version.ts"
+      "genversion --es6 ./src/version.ts"
     ]
   },
   "git": {
