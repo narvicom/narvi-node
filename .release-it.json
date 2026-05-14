@@ -1,4 +1,7 @@
 {
+  "npm": {
+    "publish": false
+  },
   "hooks": {
     "after:bump": [
       "genversion --es6 ./version.ts"

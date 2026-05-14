@@ -1,4 +1,14 @@
+# Changelog
 
+## [2.0.48](https://github.com/narvicom/narvi-node/compare/1.1.15...2.0.48) (2026-05-14)
+
+### Chores
+
+* Update package.json, tsconfig, and various source files for improved compatibility and dependency management ([058967e](https://github.com/narvicom/narvi-node/commit/058967e1d214482385fb14206444bc1d6d9150ec))
+
+### Documentation
+
+* clarify that RangeQueryParam timestamps are in milliseconds ([fce355e](https://github.com/narvicom/narvi-node/commit/fce355e56ac9b251de12504f5a01501ef3ff1255))
 
 ## [2.0.37](https://github.com/narvicom/narvi-node/compare/1.1.15...2.0.37) (2025-06-16)
 
