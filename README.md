@@ -172,22 +172,26 @@ By using the cursor, you can pinpoint the exact position in the paginated datase
 
 Additionally, Narvi's API provides the `RangeQueryParam` interface, which you can use to filter resources based on specific criteria such as date range or amount range. These filters can be applied when making requests to certain endpoints that support filtering.
 
-**Timestamp values must be Unix timestamps in milliseconds** (13-digit numbers).
+**Timestamp values must be Unix timestamps in milliseconds passed as strings**
+(13-digit numbers stringified, e.g. `'1669815899170'`). This matches the
+[OpenAPI specification](https://api.narvi.com/docs/business-banking/api) and the
+[narvi-python SDK](https://github.com/narvicom/narvi-python), and is required for
+the request signature to validate server-side.
 
 Example usage for filtering based on date range:
 
 ```typescript
 const response = await narvi.someFilteredEndpoint.list({
-  added__gte: startTime,  // Unix timestamp in milliseconds
-  added__lte: endTime,    // Unix timestamp in milliseconds
+  added__gte: startTime,  // Unix timestamp in milliseconds, as string
+  added__lte: endTime,    // Unix timestamp in milliseconds, as string
 });
 
 // Example - return all CREDIT transactions for a specific account between a date range
 const response = await narvi.transactions.list({
   account_pid: 'KFGKJ5L27ASGTZAO',
   kind: 'CREDIT',
-  added__gte: 1669815899170,
-  added__lte: 1669815899360,
+  added__gte: '1669815899170',
+  added__lte: '1669815899360',
 });
 ```
 

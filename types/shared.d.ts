@@ -143,24 +143,26 @@ declare module 'narvi' {
 
     interface RangeQueryParam {
       /**
-       * Minimum date value to filter by (inclusive)
+       * Minimum date value to filter by (inclusive).
+       * Unix timestamp in milliseconds, passed as a string (e.g. `'1669815899170'`).
        */
-      added__gte?: number
+      added__gte?: string
 
       /**
-       * Maximum value to filter by (inclusive)
+       * Maximum date value to filter by (inclusive).
+       * Unix timestamp in milliseconds, passed as a string (e.g. `'1669815899360'`).
        */
-      added__lte?: number
+      added__lte?: string
 
       /**
-       * Minimum amount value to filter by (inclusive)
+       * Minimum amount value to filter by (inclusive), passed as a string.
        */
-      amount__gte?: number
+      amount__gte?: string
 
       /**
-       * Maximum amount value to filter by (inclusive)
+       * Maximum amount value to filter by (inclusive), passed as a string.
        */
-      amount__lte?: number
+      amount__lte?: string
     }
 
     interface PaginationParams {
