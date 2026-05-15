@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.52](https://github.com/narvicom/narvi-node/compare/2.0.48...2.0.52) (2026-05-15)
+
+### Bug Fixes
+
+* **types:** align RangeQueryParam to OpenAPI spec (string instead of number) ([21f5c95](https://github.com/narvicom/narvi-node/commit/21f5c95eccae898b1637a0f4cd2bc1aa6ba827f6))
+
 ## [2.0.48](https://github.com/narvicom/narvi-node/compare/1.1.15...2.0.48) (2026-05-14)
 
 ### Chores
