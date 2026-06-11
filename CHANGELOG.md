@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.3](https://github.com/narvicom/narvi-node/compare/2.1.2...2.1.3) (2026-06-11)
+
+### Chores
+
+* switch ESM build to esbuild ([0b16049](https://github.com/narvicom/narvi-node/commit/0b160490719056b6958ee9170e0dfdc54261bad2))
+
+### Documentation
+
+* add examples ([998e321](https://github.com/narvicom/narvi-node/commit/998e3215a70fa3a9c7d3796b673c8a3096bed76d))
+* extend readme with new utils ([00bf7aa](https://github.com/narvicom/narvi-node/commit/00bf7aad360ed1c0ca7e145a5ea58b0042a1bc1c))
+* update Node.js version requirement in README ([4ac7c3c](https://github.com/narvicom/narvi-node/commit/4ac7c3cd85680df3b7f72b86a46b4f2435c831dc))
+
 ## [2.1.2](https://github.com/narvicom/narvi-node/compare/2.1.0...2.1.2) (2026-06-08)
 
 ## [2.1.0](https://github.com/narvicom/narvi-node/compare/2.0.52...2.1.0) (2026-06-08)
