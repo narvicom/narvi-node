@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.0](https://github.com/narvicom/narvi-node/compare/2.1.3...3.0.0) (2026-06-11)
+
+### Breaking Changes
+
+* Node.js 20 is now the minimum required version
+
 ## [2.1.3](https://github.com/narvicom/narvi-node/compare/2.1.2...2.1.3) (2026-06-11)
 
 ### Chores
