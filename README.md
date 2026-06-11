@@ -60,7 +60,7 @@ To get started with our Node.js library, run the following command to install it
 npm install --save narvi
 ```
 
-The library requires **Node.js 12 or later** and ships both CommonJS and ES module builds together with TypeScript
+The library requires **Node.js 20 or later** and ships both CommonJS and ES module builds together with TypeScript
 type definitions, so it works out of the box in either module system:
 
 ```javascript
